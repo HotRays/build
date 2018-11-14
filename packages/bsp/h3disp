@@ -234,6 +234,10 @@ Main() {
 				HDMIMode=37
 				pll_video=688
 				;;
+			38|1600x900)
+				HDMIMode=38
+				pll_video=476
+				;;
 			*)
 				if [ ${VideoMode} ]; then
 					echo -e "$0: missing video mode. Try one of the following:\n"
