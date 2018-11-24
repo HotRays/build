@@ -6,6 +6,7 @@
 	EXTERNAL="no" \
 	KERNEL_ONLY="no" \
 	KERNEL_CONFIGURE="no" \
+	BSPFREEZE="yes" \
 	KERNEL_TARGET="default" \
 	BUILD_DESKTOP="yes" \
 	DISPLAY_MANAGER="nodm" \

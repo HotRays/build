@@ -1,0 +1,159 @@
+diff --git a/arch/arm/dts/sun8i-h3-nanopi-m1.dts b/arch/arm/dts/sun8i-h3-nanopi-m1.dts
+index ec63d10..652a4dd 100644
+--- a/arch/arm/dts/sun8i-h3-nanopi-m1.dts
++++ b/arch/arm/dts/sun8i-h3-nanopi-m1.dts
+@@ -47,6 +47,30 @@
+ 	compatible = "friendlyarm,nanopi-m1", "allwinner,sun8i-h3";
+ };
+ 
++&emac {
++	phy-handle = <&int_mii_phy>;
++	phy-mode = "mii";
++	allwinner,leds-active-low;
++	status = "okay";
++};
++
++&mmc2 {
++        pinctrl-names = "default";
++        pinctrl-0 = <&mmc2_8bit_pins>;
++        vmmc-supply = <&reg_vcc3v3>;
++        bus-width = <8>;
++        non-removable;
++        status = "okay";
++        cap-mmc-hw-reset;
++};
++
++&mmc2_8bit_pins {
++        /* Increase drive strength for DDR modes */
++        allwinner,drive = <SUN4I_PINCTRL_40_MA>;
++        /* eMMC is missing pull-ups */
++        allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
++};
++
+ &ehci1 {
+ 	status = "okay";
+ };
+diff --git a/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts b/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts
+new file mode 100644
+index 0000000..66ada3f
+--- /dev/null
++++ b/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts
+@@ -0,0 +1,88 @@
++/*
++ * Copyright (C) 2016 Milo Kim <woogyom.kim@gmail.com>
++ *
++ * This file is dual-licensed: you can use it either under the terms
++ * of the GPL or the X11 license, at your option. Note that this dual
++ * licensing only applies to this file, and not this project as a
++ * whole.
++ *
++ *  a) This file is free software; you can redistribute it and/or
++ *     modify it under the terms of the GNU General Public License as
++ *     published by the Free Software Foundation; either version 2 of the
++ *     License, or (at your option) any later version.
++ *
++ *     This file is distributed in the hope that it will be useful,
++ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *     GNU General Public License for more details.
++ *
++ * Or, alternatively,
++ *
++ *  b) Permission is hereby granted, free of charge, to any person
++ *     obtaining a copy of this software and associated documentation
++ *     files (the "Software"), to deal in the Software without
++ *     restriction, including without limitation the rights to use,
++ *     copy, modify, merge, publish, distribute, sublicense, and/or
++ *     sell copies of the Software, and to permit persons to whom the
++ *     Software is furnished to do so, subject to the following
++ *     conditions:
++ *
++ *     The above copyright notice and this permission notice shall be
++ *     included in all copies or substantial portions of the Software.
++ *
++ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
++ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ *     OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++#include "sun8i-h3-nanopi.dtsi"
++
++/ {
++	model = "QPT VDIH3v1";
++	compatible = "QPT,VDIH3v1", "allwinner,sun8i-h3";
++};
++
++&emac {
++	phy-handle = <&int_mii_phy>;
++	phy-mode = "mii";
++	allwinner,leds-active-low;
++	status = "okay";
++};
++
++&mmc2 {
++        pinctrl-names = "default";
++        pinctrl-0 = <&mmc2_8bit_pins>;
++        vmmc-supply = <&reg_vcc3v3>;
++        bus-width = <8>;
++        non-removable;
++        status = "okay";
++        cap-mmc-hw-reset;
++};
++
++&mmc2_8bit_pins {
++        /* Increase drive strength for DDR modes */
++        allwinner,drive = <SUN4I_PINCTRL_40_MA>;
++        /* eMMC is missing pull-ups */
++        allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
++};
++
++&ehci1 {
++	status = "okay";
++};
++
++&ehci2 {
++	status = "okay";
++};
++
++&ohci1 {
++	status = "okay";
++};
++
++&ohci2 {
++	status = "okay";
++};
+diff --git a/configs/nanopi_m1_defconfig b/configs/nanopi_m1_defconfig
+index e0ae3c7..6324a71 100644
+--- a/configs/nanopi_m1_defconfig
++++ b/configs/nanopi_m1_defconfig
+@@ -12,3 +12,4 @@ CONFIG_DEFAULT_DEVICE_TREE="sun8i-h3-nanopi-m1"
+ # CONFIG_SPL_EFI_PARTITION is not set
+ CONFIG_USB_EHCI_HCD=y
+ CONFIG_SYS_USB_EVENT_POLL_VIA_INT_QUEUE=y
++CONFIG_MMC_SUNXI_SLOT_EXTRA=2
+diff --git a/configs/qpt-vdih3v1_defconfig b/configs/qpt-vdih3v1_defconfig
+new file mode 100644
+index 0000000..9046bd2
+--- /dev/null
++++ b/configs/qpt-vdih3v1_defconfig
+@@ -0,0 +1,15 @@
++CONFIG_ARM=y
++CONFIG_ARCH_SUNXI=y
++CONFIG_SPL=y
++CONFIG_MACH_SUN8I_H3=y
++CONFIG_DRAM_CLK=408
++CONFIG_DRAM_ZQ=3881979
++CONFIG_DRAM_ODT_EN=y
++CONFIG_DEFAULT_DEVICE_TREE="sun8i-h3-qpt-vdiv1"
++# CONFIG_SYS_MALLOC_CLEAR_ON_INIT is not set
++# CONFIG_CMD_FLASH is not set
++# CONFIG_SPL_DOS_PARTITION is not set
++# CONFIG_SPL_EFI_PARTITION is not set
++CONFIG_USB_EHCI_HCD=y
++CONFIG_SYS_USB_EVENT_POLL_VIA_INT_QUEUE=y
++CONFIG_MMC_SUNXI_SLOT_EXTRA=2
