@@ -164,7 +164,8 @@ case $DISPLAY_MANAGER in
 	;;
 
 	lightdm)
-		PACKAGE_LIST_DISPLAY_MANAGER="lightdm lightdm-gtk-greeter"
+		#disable lightdm
+		#PACKAGE_LIST_DISPLAY_MANAGER="lightdm lightdm-gtk-greeter"
 	;;
 
 	*)

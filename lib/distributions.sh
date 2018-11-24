@@ -239,6 +239,8 @@ install_common()
 	fi
 
 	# premit root login via SSH for the first boot
+	mkdir -p $SDCARD/var/run/sshd
+
 	sed -i 's/#\?PermitRootLogin .*/PermitRootLogin yes/' $SDCARD/etc/ssh/sshd_config
 
 	# enable PubkeyAuthentication. Enabled by default everywhere except on Jessie

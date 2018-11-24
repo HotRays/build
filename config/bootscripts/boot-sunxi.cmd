@@ -7,7 +7,7 @@ setenv load_addr "0x44000000"
 setenv overlay_error "false"
 # default values
 setenv rootdev "/dev/mmcblk0p1"
-setenv verbosity "1"
+setenv verbosity "7"
 setenv console "both"
 setenv disp_mem_reserves "off"
 setenv disp_mode "1920x1080p60"
@@ -28,7 +28,9 @@ fi
 
 if test "${logo}" = "disabled"; then setenv logo "logo.nologo"; fi
 
-if test "${console}" = "display" || test "${console}" = "both"; then setenv consoleargs "console=ttyS0,115200 console=tty1"; fi
+if test "${console}" = "display" || test "${console}" = "both"; then
+	setenv consoleargs "earlyprintk=ttyS0,115200 console=ttyS0,115200 console=tty1";
+fi
 if test "${console}" = "serial"; then setenv consoleargs "console=ttyS0,115200"; fi
 
 # get PARTUUID of first partition on SD/eMMC it was loaded from
