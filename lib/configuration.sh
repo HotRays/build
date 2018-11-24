@@ -154,8 +154,9 @@ PACKAGE_LIST_DESKTOP="xserver-xorg xserver-xorg-video-fbdev gvfs-backends gvfs-f
 
 
 # Recommended desktop packages
-PACKAGE_LIST_DESKTOP_RECOMMENDS="mirage galculator hexchat xfce4-screenshooter network-manager-openvpn-gnome mpv fbi cups-pk-helper \
-	cups geany atril xarchiver leafpad"
+# REMOVE: mirage galculator hexchat xfce4-screenshooter network-manager-openvpn-gnome cups-pk-helper \
+#	cups geany atril xarchiver leafpad
+PACKAGE_LIST_DESKTOP_RECOMMENDS="mpv fbi"
 
 case $DISPLAY_MANAGER in
 	nodm)
@@ -183,7 +184,7 @@ case $RELEASE in
 	;;
 
 	xenial)
-		PACKAGE_LIST_RELEASE="man-db wget nano"
+		PACKAGE_LIST_RELEASE="man-db wget nano acl"
 		# REMOVED:  numix-icon-theme paman libgcr-3-common gcj-jre-headless paprefs
 		PACKAGE_LIST_DESKTOP+=" "
 		PACKAGE_LIST_DESKTOP_RECOMMENDS+=" "
