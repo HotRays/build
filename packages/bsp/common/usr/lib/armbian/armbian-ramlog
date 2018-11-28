@@ -84,8 +84,17 @@ else
 	LOG_TYPE="tmpfs"
 fi
 
+# ROY: add some parasitic here~; --- LAZY fixup
+lazy_fixup() {
+	#fixup sshd run dir not created
+	[ -d /var/run/sshd ] || mkdir -p /var/run/sshd
+}
+
 case "$1" in
 	start)
+		#:(-
+		lazy_fixup
+
 		[ -d $HDD_LOG ] || mkdir -p $HDD_LOG
 		mount --bind $RAM_LOG $HDD_LOG
 		mount --make-private $HDD_LOG

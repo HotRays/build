@@ -2,7 +2,7 @@
 	RELEASE="xenial" \
 	BRANCH="default" \
 	BOARD="qpt-vdih3v1" \
-	CLEAN_LEVEL="make" \
+	CLEAN_LEVEL="make,debs" \
 	EXTERNAL="no" \
 	KERNEL_ONLY="no" \
 	KERNEL_CONFIGURE="no" \

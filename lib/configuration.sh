@@ -136,21 +136,24 @@ PACKAGE_LIST="bc bridge-utils build-essential cpufrequtils device-tree-compiler 
 
 
 # Non-essential packages
-# REMOVED: armbian-firmware 
-PACKAGE_LIST_ADDITIONAL="alsa-utils btrfs-tools dosfstools iotop iozone3 stress sysbench screen \
-	ntfs-3g vim pciutils evtest htop pv lsof apt-transport-https libfuse2 libdigest-sha-perl \
+# REMOVED: armbian-firmware btrfs-tools ntfs-3g qrencode 
+PACKAGE_LIST_ADDITIONAL="alsa-utils dosfstools iotop iozone3 stress sysbench screen \
+	vim pciutils evtest htop pv lsof apt-transport-https libfuse2 libdigest-sha-perl \
 	libproc-processtable-perl aptitude dnsutils f3 haveged hdparm rfkill vlan sysstat bash-completion \
 	hostapd git ethtool network-manager unzip ifenslave command-not-found libpam-systemd iperf3 \
-	software-properties-common libnss-myhostname f2fs-tools avahi-autoipd iputils-arping qrencode"
+	software-properties-common libnss-myhostname f2fs-tools avahi-autoipd iputils-arping"
 
 
 # Dependent desktop packages
-# profile-sync-daemon numix-gtk-theme 
-PACKAGE_LIST_DESKTOP="xserver-xorg xserver-xorg-video-fbdev gvfs-backends gvfs-fuse xfonts-base xinit \
-	x11-xserver-utils xfce4 lxtask xfce4-terminal thunar-volman gtk2-engines gtk2-engines-murrine gtk2-engines-pixbuf \
-	libgtk2.0-bin libgnome2-perl network-manager-gnome xfce4-notifyd gnome-keyring gcr libgck-1-0 p11-kit pasystray pavucontrol \
-	pulseaudio pavumeter pulseaudio-module-gconf bluez bluez-tools pulseaudio-module-bluetooth blueman libpam-gnome-keyring \
-	libgl1-mesa-dri policykit-1 gnome-orca"
+# profile-sync-daemon numix-gtk-theme gvfs-backends gvfs-fuse xfce4 lxtask xfce4-terminal \
+# thunar-volman gtk2-engines gtk2-engines-murrine gtk2-engines-pixbuf \
+# libgtk2.0-bin libgnome2-perl network-manager-gnome xfce4-notifyd gnome-keyring gcr libgck-1-0 \
+# p11-kit pasystray pavucontrol \
+# libgl1-mesa-dri policykit-1 gnome-orca \
+# pulseaudio pavumeter pulseaudio-module-gconf \
+# pulseaudio-module-bluetooth  \
+# bluez bluez-tools blueman libpam-gnome-keyring
+PACKAGE_LIST_DESKTOP="xserver-xorg xserver-xorg-video-fbdev xfonts-base xinit x11-xserver-utils"
 
 
 # Recommended desktop packages
@@ -185,8 +188,8 @@ case $RELEASE in
 	;;
 
 	xenial)
-		PACKAGE_LIST_RELEASE="man-db wget nano acl"
-		# REMOVED:  numix-icon-theme paman libgcr-3-common gcj-jre-headless paprefs
+		PACKAGE_LIST_RELEASE="wget lrzsz"
+		# REMOVED: numix-icon-theme paman libgcr-3-common gcj-jre-headless paprefs man-db acl
 		PACKAGE_LIST_DESKTOP+=" "
 		PACKAGE_LIST_DESKTOP_RECOMMENDS+=" "
 	;;
@@ -199,7 +202,7 @@ case $RELEASE in
 
 	bionic)
 		PACKAGE_LIST_RELEASE="man-db less kbd net-tools netcat-openbsd gnupg2 dirmngr nano wget"
-		PACKAGE_LIST_DESKTOP+=" xserver-xorg-input-all paprefs dbus-x11"
+		PACKAGE_LIST_DESKTOP+="xserver-xorg-input-all paprefs dbus-x11"
 		PACKAGE_LIST_DESKTOP_RECOMMENDS+=" chromium-browser system-config-printer-common system-config-printer language-selector-gnome"
 	;;
 

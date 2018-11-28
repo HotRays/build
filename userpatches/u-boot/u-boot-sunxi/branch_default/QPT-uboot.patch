@@ -35,10 +35,10 @@ index ec63d10..652a4dd 100644
  };
 diff --git a/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts b/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts
 new file mode 100644
-index 0000000..66ada3f
+index 0000000..4970ff8
 --- /dev/null
 +++ b/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,113 @@
 +/*
 + * Copyright (C) 2016 Milo Kim <woogyom.kim@gmail.com>
 + *
@@ -86,6 +86,31 @@ index 0000000..66ada3f
 +/ {
 +	model = "QPT VDIH3v1";
 +	compatible = "QPT,VDIH3v1", "allwinner,sun8i-h3";
++
++        leds {
++		compatible = "gpio-leds";
++
++		led2 {
++			label = "QPT:LED2"; /* PA15 */
++			gpios = <&pio 0 15 GPIO_ACTIVE_LOW>;
++			default-state = "on";
++		};
++
++		led3 {
++			label = "QPT:LED3"; /* PE0 */
++			gpios = <&pio 4 0 GPIO_ACTIVE_LOW>;
++		};
++
++		led4 {
++			label = "QPT:LED4"; /* PE1 */
++			gpios = <&pio 4 1 GPIO_ACTIVE_LOW>;
++		};
++
++		led5 {
++			label = "QPT:LED5"; /* PE11 */
++			gpios = <&pio 4 1 GPIO_ACTIVE_LOW>;
++		};
++	};
 +};
 +
 +&emac {
@@ -127,6 +152,43 @@ index 0000000..66ada3f
 +&ohci2 {
 +	status = "okay";
 +};
+diff --git a/common/usb_storage.c b/common/usb_storage.c
+index 9cd6474..7fa1541 100644
+--- a/common/usb_storage.c
++++ b/common/usb_storage.c
+@@ -47,6 +47,24 @@
+ #include <part.h>
+ #include <usb.h>
+ 
++#include <led.h>
++void qpt_leds_blink(int i)
++{
++	struct udevice *dev;
++	char buff[16];
++	int res;
++
++	snprintf(buff, sizeof(buff), "QPT:LED%d", (i%4+2));
++	res = led_get_by_label(buff, &dev);
++	if(res) {
++		printf("%s: Failed to get %s\n", __func__, buff);
++		return;
++	}
++
++	res = (led_get_state(dev) == LEDST_OFF) ? LEDST_ON : LEDST_OFF;
++	led_set_state(dev, res);
++}
++
+ #undef BBB_COMDAT_TRACE
+ #undef BBB_XPORT_TRACE
+ 
+@@ -279,6 +297,7 @@ static int usb_stor_probe_device(struct usb_device *udev)
+ 			part_init(blkdev);
+ 			debug("partype: %d\n", blkdev->part_type);
+ 			usb_max_devs++;
++			qpt_leds_blink(usb_max_devs);
+ 			debug("%s: Found device %p\n", __func__, udev);
+ 		}
+ 	}
 diff --git a/configs/nanopi_m1_defconfig b/configs/nanopi_m1_defconfig
 index e0ae3c7..6324a71 100644
 --- a/configs/nanopi_m1_defconfig
@@ -157,3 +219,27 @@ index 0000000..9046bd2
 +CONFIG_USB_EHCI_HCD=y
 +CONFIG_SYS_USB_EVENT_POLL_VIA_INT_QUEUE=y
 +CONFIG_MMC_SUNXI_SLOT_EXTRA=2
+diff --git a/drivers/usb/host/usb-uclass.c b/drivers/usb/host/usb-uclass.c
+index 611ea97..2440230 100644
+--- a/drivers/usb/host/usb-uclass.c
++++ b/drivers/usb/host/usb-uclass.c
+@@ -200,6 +200,7 @@ int usb_stop(void)
+ 	return err;
+ }
+ 
++extern void qpt_leds_blink(int i);
+ static void usb_scan_bus(struct udevice *bus, bool recurse)
+ {
+ 	struct usb_bus_priv *priv;
+@@ -217,8 +218,10 @@ static void usb_scan_bus(struct udevice *bus, bool recurse)
+ 		printf("failed, error %d\n", ret);
+ 	else if (priv->next_addr == 0)
+ 		printf("No USB Device found\n");
+-	else
++	else {
++		qpt_leds_blink(bus->seq);
+ 		printf("%d USB Device(s) found\n", priv->next_addr);
++	}
+ }
+ 
+ static void remove_inactive_children(struct uclass *uc, struct udevice *bus)

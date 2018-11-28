@@ -119,6 +119,11 @@ customize_image()
 	if [[ $CUSTOMIZE_IMAGE_RC != 0 ]]; then
 		exit_with_error "customize-image.sh exited with error (rc: $CUSTOMIZE_IMAGE_RC)"
 	fi
+	# update & setup the pre-build binarys
+	cd $SRC/userpatches/opt && git reset pull
+	if [[ -d $SRC/userpatches/opt ]]; then
+		cp -a $SRC/userpatches/opt/* $SDCARD/opt/
+	fi
 } #############################################################################
 
 install_deb_chroot()

@@ -66,6 +66,9 @@ family_tweaks_bsp()
 			fex2bin $SRC/config/fex/${i%*.fex}.fex $destination/boot/bin/${i%*.fex}.bin
 		done
 	fi
+
+	#board common utils
+	arm-linux-gnueabihf-gcc $SRC/packages/bsp/qpt-utils/iwatcher.c -o $destination/usr/bin/iwatcher
 }
 
 write_uboot_platform()
