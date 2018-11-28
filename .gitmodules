@@ -1,0 +1,3 @@
+[submodule "userpatches/qpt-awesome"]
+	path = userpatches/qpt-awesome
+	url = git@gitlab.com:hotray/qpt-libs.git

@@ -120,9 +120,9 @@ customize_image()
 		exit_with_error "customize-image.sh exited with error (rc: $CUSTOMIZE_IMAGE_RC)"
 	fi
 	# update & setup the pre-build binarys
-	cd $SRC/userpatches/opt && git reset pull
-	if [[ -d $SRC/userpatches/opt ]]; then
-		cp -a $SRC/userpatches/opt/* $SDCARD/opt/
+	QPT_PATH=$SRC/userpatches/qpt-awesome
+	if [[ -d $QPT_PATH ]]; then
+		cp -a $QPT_PATH/* $SDCARD/opt/
 	fi
 } #############################################################################
 
