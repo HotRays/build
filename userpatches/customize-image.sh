@@ -25,7 +25,8 @@ Main() {
 		xenial)
 			# your code here
 			# echo 4000000s >/root/.rootfs_resize
-			touch /root/.no_rootfs_resize
+			echo "40%" > /root/.rootfs_resize
+			# touch /root/.no_rootfs_resize
 			;;
 		stretch)
 			# your code here

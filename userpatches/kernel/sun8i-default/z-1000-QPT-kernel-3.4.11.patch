@@ -1,8 +1,5 @@
-diff --git a/arch/arm/mach-sunxi/power/brom/mksunxichecksum b/arch/arm/mach-sunxi/power/brom/mksunxichecksum
-index 7c24f8d05af1..4f300e61fe3c 100755
-Binary files a/arch/arm/mach-sunxi/power/brom/mksunxichecksum and b/arch/arm/mach-sunxi/power/brom/mksunxichecksum differ
 diff --git a/config.tempe-nanopi-m1 b/config.tempe-nanopi-m1
-index 07d858c61daa..633a4a83dd23 100644
+index 07d858c61daa..e9da1906fdb6 100644
 --- a/config.tempe-nanopi-m1
 +++ b/config.tempe-nanopi-m1
 @@ -334,7 +334,6 @@ CONFIG_ARCH_SUNXI=y
@@ -22,7 +19,43 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_SUNXI_OOPS_HOOK=y
  # CONFIG_MEM_512M_DEBUG is not set
  
-@@ -989,70 +988,10 @@ CONFIG_LLC=m
+@@ -498,7 +497,7 @@ CONFIG_ARM_FLUSH_CONSOLE_ON_RESTART=y
+ # CONFIG_USE_OF is not set
+ CONFIG_ZBOOT_ROM_TEXT=0
+ CONFIG_ZBOOT_ROM_BSS=0
+-CONFIG_CMDLINE="earlyprintk=ttyS0,115200 root=/dev/mmcblk0p1 loglevel=8 initcall_debug=0 console=ttyS0,115200 console=tty0 init=/init"
++CONFIG_CMDLINE="earlyprintk=ttyS0,115200 root=/dev/mmcblk1p1 loglevel=7 initcall_debug=0 console=ttyS0,115200 console=tty1 init=/init"
+ CONFIG_CMDLINE_FROM_BOOTLOADER=y
+ # CONFIG_CMDLINE_EXTEND is not set
+ # CONFIG_CMDLINE_FORCE is not set
+@@ -520,21 +519,20 @@ CONFIG_CPU_FREQ_TABLE=y
+ CONFIG_CPU_FREQ_GOV_COMMON=y
+ CONFIG_CPU_FREQ_STAT=y
+ CONFIG_CPU_FREQ_STAT_DETAILS=y
+-# CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE is not set
++CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
+ # CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE is not set
+-CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE=y
++# CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE is not set
+ # CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND is not set
+ # CONFIG_CPU_FREQ_DEFAULT_GOV_CONSERVATIVE is not set
+ # CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVE is not set
+ # CONFIG_CPU_FREQ_DEFAULT_GOV_FANTASYS is not set
+ CONFIG_CPU_FREQ_GOV_PERFORMANCE=y
+-CONFIG_CPU_FREQ_GOV_POWERSAVE=y
++# CONFIG_CPU_FREQ_GOV_POWERSAVE is not set
+ CONFIG_CPU_FREQ_GOV_USERSPACE=y
+-CONFIG_CPU_FREQ_GOV_ONDEMAND=y
+-CONFIG_CPU_FREQ_GOV_INTERACTIVE=y
++# CONFIG_CPU_FREQ_GOV_ONDEMAND is not set
++# CONFIG_CPU_FREQ_GOV_INTERACTIVE is not set
+ # CONFIG_CPU_FREQ_GOV_AUTO_HOTPLUG is not set
+ CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
+-CONFIG_CPU_FREQ_INPUT_EVNT_NOTIFY=y
+ 
+ #
+ # ARM CPU frequency scaling drivers
+@@ -989,70 +987,10 @@ CONFIG_LLC=m
  # CONFIG_WAN_ROUTER is not set
  # CONFIG_PHONET is not set
  # CONFIG_IEEE802154 is not set
@@ -95,7 +128,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_OPENVSWITCH is not set
  CONFIG_RPS=y
  CONFIG_RFS_ACCEL=y
-@@ -1069,84 +1008,13 @@ CONFIG_NET_PKTGEN=m
+@@ -1069,84 +1007,13 @@ CONFIG_NET_PKTGEN=m
  # CONFIG_NET_DROP_MONITOR is not set
  # CONFIG_HAMRADIO is not set
  # CONFIG_CAN is not set
@@ -183,7 +216,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_CFG80211=y
  # CONFIG_NL80211_TESTMODE is not set
  CONFIG_CFG80211_DEVELOPER_WARNINGS=y
-@@ -1156,13 +1024,10 @@ CONFIG_CFG80211_DEFAULT_PS=y
+@@ -1156,13 +1023,10 @@ CONFIG_CFG80211_DEFAULT_PS=y
  # CONFIG_CFG80211_INTERNAL_REGDB is not set
  CONFIG_CFG80211_WEXT=y
  CONFIG_WIRELESS_EXT_SYSFS=y
@@ -199,7 +232,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_MAC80211_HAS_RC=y
  # CONFIG_MAC80211_RC_PID is not set
  CONFIG_MAC80211_RC_MINSTREL=y
-@@ -1173,18 +1038,11 @@ CONFIG_MAC80211_MESH=y
+@@ -1173,18 +1037,11 @@ CONFIG_MAC80211_MESH=y
  CONFIG_MAC80211_LEDS=y
  # CONFIG_MAC80211_DEBUGFS is not set
  # CONFIG_MAC80211_DEBUG_MENU is not set
@@ -221,7 +254,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_NFC is not set
  
  #
-@@ -1201,9 +1059,9 @@ CONFIG_DEVTMPFS_MOUNT=y
+@@ -1201,9 +1058,9 @@ CONFIG_DEVTMPFS_MOUNT=y
  # CONFIG_STANDALONE is not set
  CONFIG_PREVENT_FIRMWARE_BUILD=y
  CONFIG_FW_LOADER=y
@@ -233,7 +266,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_DEBUG_DRIVER is not set
  # CONFIG_DEBUG_DEVRES is not set
  # CONFIG_SYS_HYPERVISOR is not set
-@@ -1233,7 +1091,6 @@ CONFIG_SW_SYNC=y
+@@ -1233,7 +1090,6 @@ CONFIG_SW_SYNC=y
  #
  # Bus devices
  #
@@ -241,7 +274,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_CONNECTOR is not set
  # CONFIG_MTD is not set
  # CONFIG_PARPORT is not set
-@@ -1253,7 +1110,7 @@ CONFIG_BLK_DEV_RAM_COUNT=8
+@@ -1253,7 +1109,7 @@ CONFIG_BLK_DEV_RAM_COUNT=8
  CONFIG_BLK_DEV_RAM_SIZE=4096
  # CONFIG_BLK_DEV_XIP is not set
  # CONFIG_CDROM_PKTCDVD is not set
@@ -250,7 +283,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_MG_DISK is not set
  # CONFIG_BLK_DEV_RBD is not set
  
-@@ -1279,9 +1136,8 @@ CONFIG_ATA_OVER_ETH=m
+@@ -1279,9 +1135,8 @@ CONFIG_ATA_OVER_ETH=m
  # CONFIG_DS1682 is not set
  # CONFIG_TI_DAC7512 is not set
  CONFIG_UID_STAT=y
@@ -261,7 +294,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_SUNXI_BROM_READ is not set
  # CONFIG_C2PORT is not set
  
-@@ -1294,9 +1150,7 @@ CONFIG_BMP085=m
+@@ -1294,9 +1149,7 @@ CONFIG_BMP085=m
  # CONFIG_EEPROM_MAX6875 is not set
  CONFIG_EEPROM_93CX6=m
  # CONFIG_EEPROM_93XX46 is not set
@@ -272,7 +305,7 @@ index 07d858c61daa..633a4a83dd23 100644
  
  #
  # Texas Instruments shared transport line discipline
-@@ -1357,27 +1211,19 @@ CONFIG_ISCSI_BOOT_SYSFS=m
+@@ -1357,27 +1210,19 @@ CONFIG_ISCSI_BOOT_SYSFS=m
  # CONFIG_SCSI_OSD_INITIATOR is not set
  # CONFIG_ATA is not set
  CONFIG_MD=y
@@ -306,7 +339,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_DM_FLAKEY is not set
  # CONFIG_DM_VERITY is not set
  # CONFIG_TARGET_CORE is not set
-@@ -1387,7 +1233,6 @@ CONFIG_BONDING=m
+@@ -1387,7 +1232,6 @@ CONFIG_BONDING=m
  # CONFIG_DUMMY is not set
  # CONFIG_EQUALIZER is not set
  CONFIG_MII=y
@@ -314,7 +347,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_NET_TEAM is not set
  CONFIG_MACVLAN=m
  # CONFIG_MACVTAP is not set
-@@ -1444,173 +1289,56 @@ CONFIG_PHYLIB=y
+@@ -1444,173 +1288,56 @@ CONFIG_PHYLIB=y
  # CONFIG_FIXED_PHY is not set
  # CONFIG_MDIO_BITBANG is not set
  # CONFIG_MICREL_KS8995MA is not set
@@ -521,7 +554,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_WAN is not set
  # CONFIG_ISDN is not set
  
-@@ -1625,189 +1353,28 @@ CONFIG_INPUT_POLLDEV=y
+@@ -1625,189 +1352,28 @@ CONFIG_INPUT_POLLDEV=y
  #
  # Userland interfaces
  #
@@ -538,7 +571,7 @@ index 07d858c61daa..633a4a83dd23 100644
 -# CONFIG_INPUT_KEYRESET is not set
 -CONFIG_INPUT_SW_DEVICE=m
 +CONFIG_INPUT_KEYRESET=y
-+CONFIG_INPUT_SW_DEVICE=y
++# CONFIG_INPUT_SW_DEVICE is not set
  
  #
  # Input Device Drivers
@@ -721,7 +754,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_GAMEPORT is not set
  
  #
-@@ -1827,7 +1394,7 @@ CONFIG_LEGACY_PTY_COUNT=0
+@@ -1827,7 +1393,7 @@ CONFIG_LEGACY_PTY_COUNT=0
  # CONFIG_N_GSM is not set
  # CONFIG_TRACE_SINK is not set
  CONFIG_DEVMEM=y
@@ -730,7 +763,7 @@ index 07d858c61daa..633a4a83dd23 100644
  
  #
  # Serial drivers
-@@ -1841,7 +1408,6 @@ CONFIG_DEVMEM=y
+@@ -1841,7 +1407,6 @@ CONFIG_DEVMEM=y
  # CONFIG_SERIAL_MAX3107 is not set
  CONFIG_SERIAL_CORE=y
  CONFIG_SERIAL_CORE_CONSOLE=y
@@ -738,7 +771,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_SERIAL_TIMBERDALE is not set
  # CONFIG_SERIAL_ALTERA_JTAGUART is not set
  # CONFIG_SERIAL_ALTERA_UART is not set
-@@ -1860,10 +1426,10 @@ CONFIG_SERIAL_SUNXI_CONSOLE=y
+@@ -1860,10 +1425,10 @@ CONFIG_SERIAL_SUNXI_CONSOLE=y
  # CONFIG_DCC_TTY is not set
  # CONFIG_RAMOOPS is not set
  # CONFIG_SUNXI_D7S is not set
@@ -753,7 +786,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_IR_CUT is not set
  CONFIG_SUNXI_CMATESET=y
  # CONFIG_SUNXI_ARISC_TEST is not set
-@@ -1871,7 +1437,7 @@ CONFIG_SUNXI_CMATESET=y
+@@ -1871,7 +1436,7 @@ CONFIG_SUNXI_CMATESET=y
  # CONFIG_SUNXI_TIMER_TEST is not set
  # CONFIG_SUNXI_DMA_TEST is not set
  # CONFIG_SUNXI_SCR is not set
@@ -762,7 +795,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_SUNXI_SOC_INFO=y
  # CONFIG_ID is not set
  # CONFIG_RESET_KEY is not set
-@@ -1879,16 +1445,16 @@ CONFIG_I2C=y
+@@ -1879,16 +1444,16 @@ CONFIG_I2C=y
  CONFIG_I2C_BOARDINFO=y
  CONFIG_I2C_COMPAT=y
  CONFIG_I2C_CHARDEV=y
@@ -786,7 +819,7 @@ index 07d858c61daa..633a4a83dd23 100644
  
  #
  # I2C Hardware Bus support
-@@ -2011,38 +1577,13 @@ CONFIG_GPIO_SYSFS=y
+@@ -2011,38 +1576,13 @@ CONFIG_GPIO_SYSFS=y
  #
  # MODULbus GPIO expanders:
  #
@@ -827,7 +860,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_BATTERY_DS2780 is not set
  # CONFIG_BATTERY_DS2781 is not set
  # CONFIG_BATTERY_DS2782 is not set
-@@ -2055,131 +1596,8 @@ CONFIG_POWER_SUPPLY=y
+@@ -2055,131 +1595,8 @@ CONFIG_POWER_SUPPLY=y
  # CONFIG_CHARGER_LP8727 is not set
  # CONFIG_CHARGER_GPIO is not set
  # CONFIG_CHARGER_SMB347 is not set
@@ -960,16 +993,28 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_THERMAL_DEFAULT_GOV_STEP_WISE=y
  # CONFIG_THERMAL_DEFAULT_GOV_FAIR_SHARE is not set
  # CONFIG_THERMAL_DEFAULT_GOV_USER_SPACE is not set
-@@ -2199,7 +1617,7 @@ CONFIG_WATCHDOG_CORE=y
+@@ -2188,10 +1605,8 @@ CONFIG_STEP_WISE=y
+ # CONFIG_USER_SPACE is not set
+ # CONFIG_SUNXI_THERMAL_DYNAMIC is not set
+ # CONFIG_CPU_THERMAL is not set
+-CONFIG_CPU_BUDGET_THERMAL=y
++# CONFIG_CPU_BUDGET_THERMAL is not set
+ CONFIG_SUNXI_THERMAL=y
+-CONFIG_SUNXI_BUDGET_COOLING=y
+-# CONFIG_SUNXI_BUDGET_COOLING_VFTBL is not set
+ CONFIG_WATCHDOG=y
+ CONFIG_WATCHDOG_CORE=y
+ # CONFIG_WATCHDOG_NOWAYOUT is not set
+@@ -2199,7 +1614,7 @@ CONFIG_WATCHDOG_CORE=y
  #
  # Watchdog Device Drivers
  #
 -CONFIG_SOFT_WATCHDOG=m
-+CONFIG_SOFT_WATCHDOG=y
++# CONFIG_SOFT_WATCHDOG is not set
  # CONFIG_DW_WATCHDOG is not set
  # CONFIG_MAX63XX_WATCHDOG is not set
  CONFIG_SUNXI_WDT=y
-@@ -2224,7 +1642,7 @@ CONFIG_BCMA_POSSIBLE=y
+@@ -2224,7 +1639,7 @@ CONFIG_BCMA_POSSIBLE=y
  #
  # Multifunction device drivers
  #
@@ -978,7 +1023,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_MFD_88PM860X is not set
  # CONFIG_MFD_SM501 is not set
  # CONFIG_MFD_ASIC3 is not set
-@@ -2265,7 +1683,7 @@ CONFIG_MFD_CORE=m
+@@ -2265,7 +1680,7 @@ CONFIG_MFD_CORE=m
  # CONFIG_MFD_MC13XXX is not set
  # CONFIG_ABX500_CORE is not set
  # CONFIG_EZX_PCAP is not set
@@ -987,7 +1032,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_MFD_TPS65090 is not set
  # CONFIG_MFD_AAT2870_CORE is not set
  # CONFIG_MFD_RC5T583 is not set
-@@ -2278,477 +1696,21 @@ CONFIG_MEDIA_SUPPORT=y
+@@ -2278,489 +1693,33 @@ CONFIG_MEDIA_SUPPORT=y
  # Multimedia core support
  #
  # CONFIG_MEDIA_CONTROLLER is not set
@@ -1466,11 +1511,28 @@ index 07d858c61daa..633a4a83dd23 100644
 -CONFIG_FB_TFT_WATTEROTT=m
 -CONFIG_FB_FLEX=m
 -CONFIG_FB_TFT_FBTFT_DEVICE=m
+-CONFIG_DRM=m
+-CONFIG_DRM_MALI=m
 +# CONFIG_FB_TFT is not set
- CONFIG_DRM=m
- CONFIG_DRM_MALI=m
++CONFIG_DRM=y
++CONFIG_DRM_MALI=y
  # CONFIG_DRM_UDL is not set
-@@ -2781,7 +1743,7 @@ CONFIG_FB_SYS_FOPS=m
+ CONFIG_ION=y
+ CONFIG_ION_SUNXI=y
+ CONFIG_ION_SUNXI_RESERVE_LIST="160M@0,256M@0,130M@1,200M@1"
+-CONFIG_MALI=m
+-CONFIG_MALI400=m
++CONFIG_MALI=y
++CONFIG_MALI400=y
+ CONFIG_MALI400_DEBUG=y
+ # CONFIG_MALI400_PROFILING is not set
+ # CONFIG_MALI400_GPU_UTILIZATION is not set
+-CONFIG_UMP=m
++CONFIG_UMP=y
+ # CONFIG_UMP_DEBUG is not set
+ # CONFIG_VGASTATE is not set
+ # CONFIG_VIDEO_OUTPUT_CONTROL is not set
+@@ -2781,7 +1740,7 @@ CONFIG_FB_SYS_FOPS=m
  CONFIG_FB_DEFERRED_IO=y
  # CONFIG_FB_SVGALIB is not set
  # CONFIG_FB_MACMODES is not set
@@ -1479,7 +1541,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_FB_MODE_HELPERS is not set
  # CONFIG_FB_TILEBLITTING is not set
  
-@@ -2800,8 +1762,6 @@ CONFIG_TV_DISP2_SUNXI=y
+@@ -2800,8 +1759,6 @@ CONFIG_TV_DISP2_SUNXI=y
  # CONFIG_DISP2_SUNXI_BOOT_COLORBAR is not set
  CONFIG_DISP2_SUNXI_DEBUG=y
  # CONFIG_FB_S1D13XXX is not set
@@ -1488,25 +1550,60 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_FB_SMSCUFX is not set
  # CONFIG_FB_UDL is not set
  # CONFIG_FB_VIRTUAL is not set
-@@ -2809,7 +1769,7 @@ CONFIG_FB_TMIO_ACCELL=y
+@@ -2809,18 +1766,9 @@ CONFIG_FB_TMIO_ACCELL=y
  # CONFIG_FB_BROADSHEET is not set
  # CONFIG_EXYNOS_VIDEO is not set
  CONFIG_BACKLIGHT_LCD_SUPPORT=y
 -CONFIG_LCD_CLASS_DEVICE=m
-+CONFIG_LCD_CLASS_DEVICE=y
- # CONFIG_LCD_L4F00242T03 is not set
- # CONFIG_LCD_LMS283GF05 is not set
- # CONFIG_LCD_LTV350QV is not set
-@@ -2820,7 +1780,7 @@ CONFIG_LCD_CLASS_DEVICE=m
- # CONFIG_LCD_LD9040 is not set
- # CONFIG_LCD_AMS369FG06 is not set
+-# CONFIG_LCD_L4F00242T03 is not set
+-# CONFIG_LCD_LMS283GF05 is not set
+-# CONFIG_LCD_LTV350QV is not set
+-# CONFIG_LCD_TDO24M is not set
+-# CONFIG_LCD_VGG2432A4 is not set
+-# CONFIG_LCD_PLATFORM is not set
+-# CONFIG_LCD_S6E63M0 is not set
+-# CONFIG_LCD_LD9040 is not set
+-# CONFIG_LCD_AMS369FG06 is not set
++# CONFIG_LCD_CLASS_DEVICE is not set
  CONFIG_BACKLIGHT_CLASS_DEVICE=y
 -CONFIG_BACKLIGHT_GENERIC=m
-+CONFIG_BACKLIGHT_GENERIC=y
++# CONFIG_BACKLIGHT_GENERIC is not set
  # CONFIG_BACKLIGHT_ADP8860 is not set
  # CONFIG_BACKLIGHT_ADP8870 is not set
  # CONFIG_BACKLIGHT_LP855X is not set
-@@ -2935,7 +1895,6 @@ CONFIG_HID_CYPRESS=y
+@@ -2831,19 +1779,23 @@ CONFIG_BACKLIGHT_GENERIC=m
+ CONFIG_DUMMY_CONSOLE=y
+ CONFIG_FRAMEBUFFER_CONSOLE=y
+ CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
+-# CONFIG_FRAMEBUFFER_CONSOLE_ROTATION is not set
++CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=y
+ CONFIG_FONTS=y
+ CONFIG_FONT_8x8=y
+ CONFIG_FONT_8x16=y
+-# CONFIG_FONT_6x11 is not set
+-# CONFIG_FONT_7x14 is not set
++CONFIG_FONT_6x11=y
++CONFIG_FONT_7x14=y
+ # CONFIG_FONT_PEARL_8x8 is not set
+ # CONFIG_FONT_ACORN_8x8 is not set
+-# CONFIG_FONT_MINI_4x6 is not set
+-# CONFIG_FONT_SUN8x16 is not set
+-# CONFIG_FONT_SUN12x22 is not set
+-# CONFIG_FONT_10x18 is not set
+-# CONFIG_LOGO is not set
++CONFIG_FONT_MINI_4x6=y
++CONFIG_FONT_SUN8x16=y
++CONFIG_FONT_SUN12x22=y
++CONFIG_FONT_10x18=y
++CONFIG_LOGO=y
++# CONFIG_LOGO_LINUX_MONO is not set
++# CONFIG_LOGO_LINUX_VGA16 is not set
++# CONFIG_LOGO_LINUX_CLUT224 is not set
++CONFIG_LOGO_ARMBIAN_CLUT224=y
+ CONFIG_SOUND=y
+ CONFIG_SOUND_OSS_CORE=y
+ CONFIG_SOUND_OSS_CORE_PRECLAIM=y
+@@ -2935,7 +1887,6 @@ CONFIG_HID_CYPRESS=y
  CONFIG_HID_DRAGONRISE=m
  CONFIG_DRAGONRISE_FF=y
  CONFIG_HID_EMS_FF=m
@@ -1514,7 +1611,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_HID_EZKEY=y
  CONFIG_HID_HOLTEK=m
  CONFIG_HOLTEK_FF=y
-@@ -2953,7 +1912,6 @@ CONFIG_LOGITECH_FF=y
+@@ -2953,7 +1904,6 @@ CONFIG_LOGITECH_FF=y
  CONFIG_LOGIRUMBLEPAD2_FF=y
  CONFIG_LOGIG940_FF=y
  CONFIG_LOGIWHEELS_FF=y
@@ -1522,7 +1619,15 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_HID_MICROSOFT=y
  CONFIG_HID_MONTEREY=y
  CONFIG_HID_MULTITOUCH=m
-@@ -2982,10 +1940,6 @@ CONFIG_HID_TIVO=m
+@@ -2965,7 +1915,6 @@ CONFIG_HID_PETALYNX=m
+ CONFIG_HID_PICOLCD=m
+ CONFIG_HID_PICOLCD_FB=y
+ CONFIG_HID_PICOLCD_BACKLIGHT=y
+-CONFIG_HID_PICOLCD_LCD=y
+ CONFIG_HID_PICOLCD_LEDS=y
+ CONFIG_HID_PRIMAX=m
+ CONFIG_HID_ROCCAT=m
+@@ -2982,10 +1931,6 @@ CONFIG_HID_TIVO=m
  CONFIG_HID_TOPSEED=m
  CONFIG_HID_THRUSTMASTER=m
  CONFIG_THRUSTMASTER_FF=y
@@ -1533,7 +1638,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_HID_XINMO=m
  CONFIG_HID_ZEROPLUS=m
  CONFIG_ZEROPLUS_FF=y
-@@ -3122,18 +2076,6 @@ CONFIG_USB_SERIAL_IPW=m
+@@ -3122,18 +2067,6 @@ CONFIG_USB_SERIAL_IPW=m
  CONFIG_USB_SERIAL_IUU=m
  CONFIG_USB_SERIAL_KEYSPAN_PDA=m
  CONFIG_USB_SERIAL_KEYSPAN=m
@@ -1552,7 +1657,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_USB_SERIAL_KLSI=m
  CONFIG_USB_SERIAL_KOBIL_SCT=m
  CONFIG_USB_SERIAL_MCT_U232=m
-@@ -3224,7 +2166,6 @@ CONFIG_USB_G_MULTI_RNDIS=y
+@@ -3224,7 +2157,6 @@ CONFIG_USB_G_MULTI_RNDIS=y
  CONFIG_USB_G_MULTI_CDC=y
  CONFIG_USB_G_HID=m
  # CONFIG_USB_G_DBGP is not set
@@ -1560,7 +1665,25 @@ index 07d858c61daa..633a4a83dd23 100644
  
  #
  # OTG and related infrastructure
-@@ -3410,16 +2351,13 @@ CONFIG_SUNXI_DMA=y
+@@ -3281,7 +2213,7 @@ CONFIG_LEDS_CLASS=y
+ # CONFIG_LEDS_PCA9532 is not set
+ CONFIG_LEDS_GPIO=y
+ CONFIG_SUNXI_LEDS=y
+-CONFIG_SUNXI_LEDS_COM=y
++# CONFIG_SUNXI_LEDS_COM is not set
+ # CONFIG_LEDS_LP3944 is not set
+ # CONFIG_LEDS_LP5521 is not set
+ # CONFIG_LEDS_LP5523 is not set
+@@ -3301,7 +2233,7 @@ CONFIG_LEDS_TRIGGERS=y
+ CONFIG_LEDS_TRIGGER_TIMER=y
+ CONFIG_LEDS_TRIGGER_HEARTBEAT=y
+ CONFIG_LEDS_TRIGGER_BACKLIGHT=y
+-CONFIG_LEDS_TRIGGER_GPIO=m
++CONFIG_LEDS_TRIGGER_GPIO=y
+ CONFIG_LEDS_TRIGGER_DEFAULT_ON=y
+ 
+ #
+@@ -3410,16 +2342,13 @@ CONFIG_SUNXI_DMA=y
  # Microsoft Hyper-V guest support
  #
  CONFIG_STAGING=y
@@ -1579,7 +1702,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_RTS5139 is not set
  # CONFIG_TRANZPORT is not set
  # CONFIG_LINE6_USB is not set
-@@ -3427,7 +2365,7 @@ CONFIG_R8712U=m
+@@ -3427,7 +2356,7 @@ CONFIG_R8712U=m
  # CONFIG_USB_SERIAL_QUATECH_USB2 is not set
  # CONFIG_VT6656 is not set
  # CONFIG_IIO is not set
@@ -1588,7 +1711,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_ZRAM_DEBUG is not set
  CONFIG_ZSMALLOC=y
  # CONFIG_FB_SM7XX is not set
-@@ -3441,11 +2379,7 @@ CONFIG_ZSMALLOC=y
+@@ -3441,11 +2370,7 @@ CONFIG_ZSMALLOC=y
  # CONFIG_SPEAKUP is not set
  # CONFIG_TOUCHSCREEN_CLEARPAD_TM1217 is not set
  # CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4 is not set
@@ -1601,7 +1724,7 @@ index 07d858c61daa..633a4a83dd23 100644
  
  #
  # Android
-@@ -3523,15 +2457,9 @@ CONFIG_JBD2=y
+@@ -3523,15 +2448,9 @@ CONFIG_JBD2=y
  CONFIG_FS_MBCACHE=y
  # CONFIG_REISERFS_FS is not set
  # CONFIG_JFS_FS is not set
@@ -1619,7 +1742,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_NILFS2_FS is not set
  CONFIG_FS_POSIX_ACL=y
  CONFIG_EXPORTFS=y
-@@ -3544,7 +2472,7 @@ CONFIG_FANOTIFY_ACCESS_PERMISSIONS=y
+@@ -3544,7 +2463,7 @@ CONFIG_FANOTIFY_ACCESS_PERMISSIONS=y
  CONFIG_QUOTA=y
  CONFIG_QUOTA_NETLINK_INTERFACE=y
  CONFIG_PRINT_QUOTA_WARNING=y
@@ -1628,7 +1751,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_QUOTA_TREE=m
  CONFIG_QFMT_V1=m
  CONFIG_QFMT_V2=m
-@@ -3602,77 +2530,8 @@ CONFIG_TMPFS_POSIX_ACL=y
+@@ -3602,77 +2521,8 @@ CONFIG_TMPFS_POSIX_ACL=y
  CONFIG_TMPFS_XATTR=y
  # CONFIG_HUGETLB_PAGE is not set
  # CONFIG_CONFIGFS_FS is not set
@@ -1708,7 +1831,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_NLS=y
  CONFIG_NLS_DEFAULT="iso8859-1"
  CONFIG_NLS_CODEPAGE_437=y
-@@ -3735,10 +2594,10 @@ CONFIG_LOCKUP_DETECTOR=y
+@@ -3735,10 +2585,10 @@ CONFIG_LOCKUP_DETECTOR=y
  # CONFIG_HARDLOCKUP_DETECTOR_NMI is not set
  CONFIG_HARDLOCKUP_DETECTOR_OTHER_CPU=y
  CONFIG_HARDLOCKUP_DETECTOR=y
@@ -1723,7 +1846,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_DETECT_HUNG_TASK=y
  CONFIG_DEFAULT_HUNG_TASK_TIMEOUT=120
  # CONFIG_BOOTPARAM_HUNG_TASK_PANIC is not set
-@@ -3764,7 +2623,7 @@ CONFIG_STACKTRACE=y
+@@ -3764,7 +2614,7 @@ CONFIG_STACKTRACE=y
  # CONFIG_DEBUG_STACK_USAGE is not set
  # CONFIG_DEBUG_KOBJECT is not set
  # CONFIG_DEBUG_HIGHMEM is not set
@@ -1732,7 +1855,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_DEBUG_INFO is not set
  # CONFIG_DEBUG_VM is not set
  # CONFIG_DEBUG_WRITECOUNT is not set
-@@ -3775,7 +2634,7 @@ CONFIG_DEBUG_MEMORY_INIT=y
+@@ -3775,7 +2625,7 @@ CONFIG_DEBUG_MEMORY_INIT=y
  # CONFIG_DEBUG_NOTIFIERS is not set
  # CONFIG_DEBUG_CREDENTIALS is not set
  CONFIG_FRAME_POINTER=y
@@ -1741,7 +1864,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_RCU_TORTURE_TEST is not set
  CONFIG_RCU_CPU_STALL_TIMEOUT=20
  CONFIG_RCU_CPU_STALL_VERBOSE=y
-@@ -3823,14 +2682,9 @@ CONFIG_FTRACE_MCOUNT_RECORD=y
+@@ -3823,14 +2673,9 @@ CONFIG_FTRACE_MCOUNT_RECORD=y
  # CONFIG_DYNAMIC_DEBUG is not set
  # CONFIG_DMA_API_DEBUG is not set
  # CONFIG_ATOMIC64_SELFTEST is not set
@@ -1757,7 +1880,7 @@ index 07d858c61daa..633a4a83dd23 100644
  # CONFIG_TEST_KSTRTOX is not set
  CONFIG_STRICT_DEVMEM=y
  CONFIG_ARM_UNWIND=y
-@@ -3871,12 +2725,6 @@ CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=0
+@@ -3871,12 +2716,6 @@ CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=0
  # CONFIG_DEFAULT_SECURITY_APPARMOR is not set
  CONFIG_DEFAULT_SECURITY_DAC=y
  CONFIG_DEFAULT_SECURITY=""
@@ -1770,7 +1893,7 @@ index 07d858c61daa..633a4a83dd23 100644
  CONFIG_CRYPTO=y
  
  #
-@@ -3996,7 +2844,6 @@ CONFIG_BINARY_PRINTF=y
+@@ -3996,7 +2835,6 @@ CONFIG_BINARY_PRINTF=y
  #
  # Library routines
  #
@@ -1793,6 +1916,19 @@ index 654cfd7f4d56..c7c20b713a3c
  #else
  	type = script_get_item("dram_para", "dram_tpr12", &val);
  	if (SCIRPT_ITEM_VALUE_TYPE_INT != type) {
+diff --git a/drivers/gpio/gpio-sunxi.c b/drivers/gpio/gpio-sunxi.c
+index 02142024854e..287b48aa5349 100755
+--- a/drivers/gpio/gpio-sunxi.c
++++ b/drivers/gpio/gpio-sunxi.c
+@@ -538,7 +538,7 @@ static int __init gpio_sw_init(void)
+ 
+     used = val.val;
+     if(!used){
+-        printk(KERN_ERR "this module is used not!\n");
++        printk(KERN_ERR "%s: this module is used not!\n", __func__);
+         goto INIT_END;
+     }
+ 
 diff --git a/drivers/i2c/busses/i2c-sunxi.c b/drivers/i2c/busses/i2c-sunxi.c
 old mode 100755
 new mode 100644
@@ -1812,6 +1948,19 @@ index f47704bf1414..2592bd48187c
  	twi_set_start(base_addr);
  	twi_clear_irq_flag(base_addr);
  	while((1 == twi_get_start(base_addr))&&(--timeout));
+diff --git a/drivers/input/init-input.c b/drivers/input/init-input.c
+index bc6130ff142b..c13c344f3ef0 100755
+--- a/drivers/input/init-input.c
++++ b/drivers/input/init-input.c
+@@ -683,7 +683,7 @@ static int ths_fetch_sysconfig_para(enum input_sensor_type *ths_type)
+ 	type = script_get_item("ths_para", "ths_trend", &val);
+ 
+ 	if (SCIRPT_ITEM_VALUE_TYPE_INT != type) {
+-		pr_err("%s: type err  device_used = %d. \n", __func__, val.val);
++		pr_err("%s: type err  ths_trend = %d. \n", __func__, val.val);
+ 	} else
+ 		data->ths_trend = val.val;
+ 
 diff --git a/drivers/leds/leds-sunxi.c b/drivers/leds/leds-sunxi.c
 index 5d0aba53a28c..2424eded76bd 100755
 --- a/drivers/leds/leds-sunxi.c
@@ -1851,6 +2000,72 @@ index 5d0aba53a28c..2424eded76bd 100755
          char led_active_low[25];
  
          type = script_get_item("leds_para", "leds_used", &val);
+diff --git a/drivers/video/console/fbcon.c b/drivers/video/console/fbcon.c
+index a01317c9c07b..2418578c3de8 100644
+--- a/drivers/video/console/fbcon.c
++++ b/drivers/video/console/fbcon.c
+@@ -612,7 +612,7 @@ static void fbcon_prepare_logo(struct vc_data *vc, struct fb_info *info,
+ 	if (fb_get_color_depth(&info->var, &info->fix) == 1)
+ 		erase &= ~0x400;
+ 	logo_height = fb_prepare_logo(info, ops->rotate);
+-	logo_lines = DIV_ROUND_UP(logo_height, vc->vc_font.height);
++	logo_lines = DIV_ROUND_UP(logo_height, vc->vc_font.height) - 1;
+ 	q = (unsigned short *) (vc->vc_origin +
+ 				vc->vc_size_row * rows);
+ 	step = logo_lines * cols;
+@@ -668,8 +668,8 @@ static void fbcon_prepare_logo(struct vc_data *vc, struct fb_info *info,
+ 
+ 	if (logo_lines > vc->vc_bottom) {
+ 		logo_shown = FBCON_LOGO_CANSHOW;
+-		printk(KERN_INFO
+-		       "fbcon_init: disable boot-logo (boot-logo bigger than screen).\n");
++		printk(KERN_ERR
++		       "fbcon_init: disable boot-logo height: %d (boot-logo bigger than screen %d:%d).\n", logo_height, logo_lines, vc->vc_bottom);
+ 	} else if (logo_shown != FBCON_LOGO_DONTSHOW) {
+ 		logo_shown = FBCON_LOGO_DRAW;
+ 		vc->vc_top = logo_lines;
+diff --git a/drivers/video/fbmem.c b/drivers/video/fbmem.c
+index 5641a2273042..f900ec9e7690 100644
+--- a/drivers/video/fbmem.c
++++ b/drivers/video/fbmem.c
+@@ -482,7 +482,7 @@ static int fb_show_logo_line(struct fb_info *info, int rotate,
+ 	}
+ 
+ 	if (fb_logo.depth <= 4) {
+-		logo_new = kmalloc(logo->width * logo->height, GFP_KERNEL);
++		logo_new = kmalloc(info->var.xres * info->var.yres, GFP_KERNEL);
+ 		if (logo_new == NULL) {
+ 			kfree(palette);
+ 			if (saved_pseudo_palette)
+@@ -493,8 +493,8 @@ static int fb_show_logo_line(struct fb_info *info, int rotate,
+ 		fb_set_logo(info, logo, logo_new, fb_logo.depth);
+ 	}
+ 
+-	image.dx = 0;
+-	image.dy = y;
++	image.dx = (info->var.xres - logo->width) / 2;
++	image.dy = (info->var.yres - logo->height) / 2;
+ 	image.width = logo->width;
+ 	image.height = logo->height;
+ 
+@@ -652,15 +652,14 @@ int fb_prepare_logo(struct fb_info *info, int rotate)
+  		}
+  	}
+ 
+-	return fb_prepare_extra_logos(info, fb_logo.logo->height, yres);
++	return fb_prepare_extra_logos(info, info->var.yres, yres);
+ }
+ 
+ int fb_show_logo(struct fb_info *info, int rotate)
+ {
+ 	int y;
+ 
+-	y = fb_show_logo_line(info, rotate, fb_logo.logo, 0,
+-			      num_online_cpus());
++	y = fb_show_logo_line(info, rotate, fb_logo.logo, 0, 1);
+ 	y = fb_show_extra_logos(info, y, rotate);
+ 
+ 	return y;
 diff --git a/drivers/video/fbtft/Kconfig b/drivers/video/fbtft/Kconfig
 index 52d7b2195e6f..af431e856fcd 100644
 --- a/drivers/video/fbtft/Kconfig
@@ -2116,6 +2331,62 @@ index c3cbdc9575d6..23eeac6f6f01 100644
  	}, {
  		.name = "sainsmart32",
  		.pdev = &(struct platform_device) {
+diff --git a/drivers/video/logo/Kconfig b/drivers/video/logo/Kconfig
+index 39ac49e0682c..93460b4c22e8 100644
+--- a/drivers/video/logo/Kconfig
++++ b/drivers/video/logo/Kconfig
+@@ -27,6 +27,10 @@ config LOGO_LINUX_CLUT224
+ 	bool "Standard 224-color Linux logo"
+ 	default y
+ 
++config LOGO_ARMBIAN_CLUT224
++	bool "Standard 224-color Armbian logo"
++	default y
++
+ config LOGO_BLACKFIN_VGA16
+ 	bool "16-colour Blackfin Processor Linux logo"
+ 	depends on BLACKFIN
+diff --git a/drivers/video/logo/Makefile b/drivers/video/logo/Makefile
+index 3b437813584c..113be5746a47 100644
+--- a/drivers/video/logo/Makefile
++++ b/drivers/video/logo/Makefile
+@@ -15,6 +15,7 @@ obj-$(CONFIG_LOGO_SUPERH_MONO)		+= logo_superh_mono.o
+ obj-$(CONFIG_LOGO_SUPERH_VGA16)		+= logo_superh_vga16.o
+ obj-$(CONFIG_LOGO_SUPERH_CLUT224)	+= logo_superh_clut224.o
+ obj-$(CONFIG_LOGO_M32R_CLUT224)		+= logo_m32r_clut224.o
++obj-$(CONFIG_LOGO_ARMBIAN_CLUT224)	+= logo_armbian_clut224.o
+ 
+ obj-$(CONFIG_SPU_BASE)			+= logo_spe_clut224.o
+ 
+diff --git a/drivers/video/logo/logo.c b/drivers/video/logo/logo.c
+index cc5dbb5b2f71..cdd9d8a9da2d 100644
+--- a/drivers/video/logo/logo.c
++++ b/drivers/video/logo/logo.c
+@@ -1,4 +1,3 @@
+-
+ /*
+  *  Linux logo to be displayed on boot
+  *
+@@ -40,6 +39,8 @@ static int __init fb_logo_late_init(void)
+ 
+ late_initcall(fb_logo_late_init);
+ 
++extern const struct linux_logo logo_armbian_clut224;
++
+ /* logo's are marked __initdata. Use __init_refok to tell
+  * modpost that it is intended that this function uses data
+  * marked __initdata.
+@@ -114,6 +115,10 @@ const struct linux_logo * __init_refok fb_find_logo(int depth)
+ #ifdef CONFIG_LOGO_M32R_CLUT224
+ 		/* M32R Linux logo */
+ 		logo = &logo_m32r_clut224;
++#endif
++#ifdef CONFIG_LOGO_ARMBIAN_CLUT224
++		/* Armadeus Linux logo */
++		logo = &logo_armbian_clut224;
+ #endif
+ 	}
+ 	return logo;
 diff --git a/drivers/video/sunxi/disp2/disp/de/disp_display.c b/drivers/video/sunxi/disp2/disp/de/disp_display.c
 index 37084b7cb3a6..093cfb78e92c 100755
 --- a/drivers/video/sunxi/disp2/disp/de/disp_display.c
@@ -2142,6 +2413,19 @@ index 37084b7cb3a6..093cfb78e92c 100755
  		}
  	}
  	/* FIXME: add other output device res */
+diff --git a/drivers/video/sunxi/disp2/disp/de/disp_enhance.c b/drivers/video/sunxi/disp2/disp/de/disp_enhance.c
+index e5af356171a0..2b103758bb1d 100755
+--- a/drivers/video/sunxi/disp2/disp/de/disp_enhance.c
++++ b/drivers/video/sunxi/disp2/disp/de/disp_enhance.c
+@@ -91,7 +91,7 @@ static s32 disp_enhance_update_regs(struct disp_enhance* enhance)
+ 	/* size likely change while it depend on layer size */
+ 	//if(enhancep->applied) {
+ 	{
+-		DE_INF("enhance %d, enable=%d\n", enhance->disp, enhancep->config.info.enable);
++		// DE_INF("enhance %d, enable=%d\n", enhance->disp, enhancep->config.info.enable);
+ 		disp_al_enhance_update_regs(enhance->disp);
+ 	}
+ 
 diff --git a/drivers/video/sunxi/disp2/hdmi/aw/hdmi_bsp_sun8iw7.c b/drivers/video/sunxi/disp2/hdmi/aw/hdmi_bsp_sun8iw7.c
 index 230220eb07be..eb6397a5f7f3 100755
 --- a/drivers/video/sunxi/disp2/hdmi/aw/hdmi_bsp_sun8iw7.c

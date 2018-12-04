@@ -153,7 +153,8 @@ PACKAGE_LIST_ADDITIONAL="alsa-utils dosfstools iotop iozone3 stress sysbench scr
 # pulseaudio pavumeter pulseaudio-module-gconf \
 # pulseaudio-module-bluetooth  \
 # bluez bluez-tools blueman libpam-gnome-keyring
-PACKAGE_LIST_DESKTOP="xserver-xorg xserver-xorg-video-fbdev xfonts-base xinit x11-xserver-utils"
+PACKAGE_LIST_DESKTOP="xserver-xorg xserver-xorg-video-fbdev \
+			 xfonts-base xinit x11-xserver-utils x11-utils"
 
 
 # Recommended desktop packages

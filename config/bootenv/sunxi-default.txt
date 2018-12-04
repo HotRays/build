@@ -1,4 +1,4 @@
-verbosity=1
-logo=disabled
+verbosity=4
+logo=enabled
 console=both
 disp_mode=1920x1080p60

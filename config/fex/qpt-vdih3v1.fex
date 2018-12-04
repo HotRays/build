@@ -221,7 +221,7 @@ manual_cs = 0
 ; NOTE: This section is necessary only for "gpio_sunxi" driver
 ; which is obsolete for H3 boards
 [gpio_para]
-gpio_used = 0
+gpio_used = 1
 gpio_num = 0
 
 [leds_para]
@@ -238,6 +238,7 @@ QPT_LED5_active_low = 1
 
 [ths_para]
 ths_used = 1
+ths_trend = 0
 ths_trip1_count = 8
 ths_trip1_0 = 65
 ths_trip1_1 = 70
@@ -348,7 +349,7 @@ gmac_used = 2
 gmac_power1 =
 
 [csi0]
-vip_used = 1
+vip_used = 0
 vip_mode = 0
 vip_dev_qty = 1
 vip_define_sensor_list = 0
@@ -652,7 +653,7 @@ spdif_used = 1
 hdmi_used = 1
 
 [s_cir0]
-ir_used = 1
+ir_used = 0
 ir_rx = port:PL11<2><1><default><default>
 ir_power_key_code0 = 87
 ir_addr_code0 = 40704
@@ -718,7 +719,8 @@ pmu_gpio0 = port:PL06<1><1><2><1>
 pmu_level0 = 11300
 pmu_level1 = 1100
 max_freq = 1200000000
-min_freq = 240000000
+min_freq = 800000000
+extremity_freq = 1200000000
 LV_count = 6
 LV1_freq = 1200000000
 LV1_volt = 1300

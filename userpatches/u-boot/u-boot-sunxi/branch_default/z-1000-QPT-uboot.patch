@@ -35,7 +35,7 @@ index ec63d10..652a4dd 100644
  };
 diff --git a/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts b/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts
 new file mode 100644
-index 0000000..4970ff8
+index 0000000..4ba3a89
 --- /dev/null
 +++ b/arch/arm/dts/sun8i-h3-qpt-vdiv1.dts
 @@ -0,0 +1,113 @@
@@ -108,7 +108,7 @@ index 0000000..4970ff8
 +
 +		led5 {
 +			label = "QPT:LED5"; /* PE11 */
-+			gpios = <&pio 4 1 GPIO_ACTIVE_LOW>;
++			gpios = <&pio 4 11 GPIO_ACTIVE_LOW>;
 +		};
 +	};
 +};
@@ -348,3 +348,44 @@ index 611ea97..2440230 100644
  }
  
  static void remove_inactive_children(struct uclass *uc, struct udevice *bus)
+diff --git a/drivers/video/dw_hdmi.c b/drivers/video/dw_hdmi.c
+index dbad0e2..7fdd1f3 100644
+--- a/drivers/video/dw_hdmi.c
++++ b/drivers/video/dw_hdmi.c
+@@ -696,7 +696,7 @@ int dw_hdmi_read_edid(struct dw_hdmi *hdmi, u8 *buf, int buf_size)
+ 	} else {
+ 		ret = hdmi_read_edid(hdmi, 0, buf);
+ 		if (ret) {
+-			debug("failed to read edid.\n");
++			printf("%s: Failed to read edid.\n", __func__);
+ 			return -1;
+ 		}
+ 
+@@ -706,6 +706,7 @@ int dw_hdmi_read_edid(struct dw_hdmi *hdmi, u8 *buf, int buf_size)
+ 		}
+ 	}
+ 
++	edid_print_info((struct edid1_info *)buf);
+ 	return edid_size;
+ }
+ 
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index f2d02fe..51e37ee 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -337,11 +337,10 @@
+ 	BOOTENV_SHARED_EFI \
+ 	"boot_prefixes=/ /boot/\0" \
+ 	"splashpos=m,m\0" \
+-	"splashimage=66000000\0" \
+-	"loadsplash= " \
+-		"for prefix in ${boot_prefixes}; do " \
+-			"if test -e mmc 0 ${prefix}boot.bmp; then " \
+-				"load mmc 0 ${splashimage} ${prefix}boot.bmp; " \
++	"splashimage=0x66000000\0" \
++	"loadsplash=for prefix in ${boot_prefixes}; do " \
++			"if test -e mmc 1 ${prefix}boot.bmp; then " \
++				"load mmc 1 ${splashimage} ${prefix}boot.bmp; " \
+ 				"bmp d ${splashimage}; " \
+ 			"fi; " \
+ 		"done\0" \
