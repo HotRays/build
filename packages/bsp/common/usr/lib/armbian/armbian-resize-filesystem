@@ -60,8 +60,8 @@ do_expand_partition()
 				[[ $lastsector -lt $partend ]] && unset lastsector
 				;;
 		esac
-		# if SD card is larger than 4GB then create another partition behind first one(s)
-		if [[ $capacity -ge 5 ]]; then
+		# if SD card is larger than 2GB then create another partition behind first one(s)
+		if [[ $capacity -ge 2 ]]; then
 			local secondpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 99 / 3200))}") -1 ))
 			if [[ $secondpartition -lt $partend ]]; then
 				unset secondpartition
@@ -189,7 +189,30 @@ case "$1" in
 		esac
 
 		# disable itself
-		[[ ! -f /var/run/resize2fs-reboot ]] && systemctl disable armbian-resize-filesystem
+		[[ ! -f /var/run/resize2fs-reboot ]] && {
+			echo "second stage finished, disable resize services ..." >>${Log}
+
+			# TODO: init the /opt, /qpt utils ...
+			secondpart=$(echo ${rootpart} | cut -c1-13)$(expr $(echo ${rootpart} | cut -c14) + 1)
+			[[ -b ${secondpart} ]] && {
+				echo "found secondpart: ${secondpart}." >>${Log}
+
+				yes | mkfs.ext4 $secondpart
+				SECPRT_UUID=$(tune2fs -l /dev/mmcblk0p2 2>/dev/null | grep UUID | awk '{print $3}')
+
+				grep ${SECPRT_UUID} /etc/fstab 2>/dev/null || {
+					if grep "/opt" /etc/fstab 2>/dev/null; then
+						sed "s~UUID=.* /opt ~UUID=${SECPRT_UUID} /opt ~g" /etc/fstab > /tmp/fstab 2>/dev/null && {
+							cp /tmp/fstab /etc/fstab && sync
+						}
+					else
+						echo "UUID=${SECPRT_UUID} /opt ext4 defaults,noatime,nodiratime,commit=600,errors=remount-ro 0 1" >> /etc/fstab
+					fi
+				}
+			}
+
+			systemctl disable armbian-resize-filesystem
+		}
 		exit 0
 		;;
 
