@@ -16,7 +16,7 @@ ENABLED=false
 
 # Never touch anything below here. Only edit /etc/default/armbian-ramlog
 
-HDD_LOG=/var/log.hdd/
+HDD_LOG=/opt/log.hdd/
 RAM_LOG=/var/log/
 LOG2RAM_LOG="${HDD_LOG}armbian-ramlog.log"
 LOG_OUTPUT="tee -a $LOG2RAM_LOG"

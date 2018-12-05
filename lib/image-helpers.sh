@@ -119,7 +119,7 @@ customize_image()
 	if [[ $CUSTOMIZE_IMAGE_RC != 0 ]]; then
 		exit_with_error "customize-image.sh exited with error (rc: $CUSTOMIZE_IMAGE_RC)"
 	fi
-	# update & setup the pre-build binarys
+	# update & setup the pre-build binnary
 	QPT_PATH=$SRC/userpatches/qpt-awesome
 	if [[ -d $QPT_PATH ]]; then
 		cp -a $QPT_PATH/* $SDCARD/opt/
