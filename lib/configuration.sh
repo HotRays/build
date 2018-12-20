@@ -154,7 +154,8 @@ PACKAGE_LIST_ADDITIONAL="alsa-utils dosfstools iotop iozone3 stress sysbench scr
 # pulseaudio-module-bluetooth  \
 # bluez bluez-tools blueman libpam-gnome-keyring
 PACKAGE_LIST_DESKTOP="xserver-xorg xserver-xorg-video-fbdev \
-			 xfonts-base xinit x11-xserver-utils x11-utils"
+			 xfonts-base xinit x11-xserver-utils x11-utils \
+			 ibus python-gtk2 python-requests python-usb"
 
 
 # Recommended desktop packages

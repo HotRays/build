@@ -188,7 +188,11 @@ do_init_extfs()
 				echo "UUID=${PART_UUID} ${FS_DIR} ext4 defaults,noatime,nodiratime,commit=600,errors=remount-ro 0 1" >> /etc/fstab
 			fi
 		}
+
+		return 0
 	}
+
+	return -1
 }
 
 case "$1" in
@@ -224,12 +228,20 @@ case "$1" in
 		[[ ! -f /var/run/resize2fs-reboot ]] && {
 			echo "second stage finished, disable resize services ..." >>${Log}
 
-			# TODO: init the /opt, /qpt utils ...
+			# TODO: init the /opt, zenputer utils ...
 			secondpart=$(echo ${rootpart} | cut -c1-13)$(expr $(echo ${rootpart} | cut -c14) + 1)
-			do_init_extfs ${secondpart} /opt
+			do_init_extfs ${secondpart} /opt && {
+				[ -f /opt/zenputer.tar.gz ] && {
+					cp /opt/zenputer.tar.gz /tmp
+					mount ${secondpart} /opt && {
+						tar xvf /tmp/zenputer.tar.gz -C /
+						umount /opt && echo "\n### Zenpter sysroot patched ok." >>${Log}
+					}
+				}
+			}
 
 			thirdpart=$(echo ${rootpart} | cut -c1-13)$(expr $(echo ${rootpart} | cut -c14) + 2)
-			do_init_extfs ${thirdpart} /opt/log.hdd
+			do_init_extfs ${thirdpart} /var/log.hdd
 
 			systemctl disable armbian-resize-filesystem
 		}

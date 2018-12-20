@@ -121,9 +121,10 @@ customize_image()
 	fi
 	# update & setup the pre-build binnary
 	QPT_PATH=$SRC/userpatches/qpt-awesome
-	if [[ -d $QPT_PATH ]]; then
-		cp -a $QPT_PATH/* $SDCARD/opt/
-	fi
+	cd $QPT_PATH && {
+		#cp -a $QPT_PATH/* $SDCARD/opt/
+		tar czvf $SDCARD/opt/zenputer.tar.gz *
+	}
 } #############################################################################
 
 install_deb_chroot()
