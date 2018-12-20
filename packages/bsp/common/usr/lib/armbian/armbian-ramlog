@@ -85,17 +85,22 @@ else
 fi
 
 # ROY: add some parasitic here~; --- LAZY fixup
-lazy_fixup() {
-	#fixup sshd run dir not created
+lazy_start_fixup() {
+	# fixup sshd run dir not created
 	[ -d /var/run/sshd ] || mkdir -p /var/run/sshd
-	[ -d /var/log/zenputer ] || mkdir -p /var/log/zenputer
+	[ -d /var/log/thinputer ] || mkdir -p /var/log/thinputer
+}
+
+lazy_stop_fixup() {
+	# fixup stop logic, /opt MUST unmount
+	# umount -l /opt # auto unmount by system scripts ?
 }
 
 case "$1" in
 	start)
 		[ -d $HDD_LOG ] || mkdir -p $HDD_LOG
-		mount --bind $RAM_LOG $HDD_LOG
-		mount --make-private $HDD_LOG
+		# mount --bind $RAM_LOG $HDD_LOG
+		# mount --make-private $HDD_LOG
 
 		case $LOG_TYPE in
 			zram)
@@ -112,12 +117,15 @@ case "$1" in
 		RecreateLogs
 
 		#:(-
-		lazy_fixup
+		lazy_start_fixup
 		;;
 	stop)
 		syncToDisk
 		umount -l $RAM_LOG
-		umount -l $HDD_LOG
+		# umount -l $HDD_LOG
+
+		#:(-
+		lazy_stop_fixup
 		;;
 	write)
 		syncToDisk

@@ -189,7 +189,7 @@ case $RELEASE in
 	;;
 
 	xenial)
-		PACKAGE_LIST_RELEASE="wget lrzsz"
+		PACKAGE_LIST_RELEASE="wget lrzsz bsdmainutils"
 		# REMOVED: numix-icon-theme paman libgcr-3-common gcj-jre-headless paprefs man-db acl
 		PACKAGE_LIST_DESKTOP+=" "
 		PACKAGE_LIST_DESKTOP_RECOMMENDS+=" "

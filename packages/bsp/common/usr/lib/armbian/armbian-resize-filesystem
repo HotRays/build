@@ -51,20 +51,25 @@ do_expand_partition()
 				# the erase block size of more recent SD cards (512 byte sectors, so we use 32
 				# as divider and substract 1)
 				local percentage=$(echo $RESIZE_VALUE | tr -c -d '[:digit:]')
-				local lastsector=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * $percentage / 3200))}") - 1 ))
-				[[ $lastsector -lt $partend ]] && unset lastsector
+				local root_end_sector=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * $percentage / 3200))}") - 1 ))
+				[[ $root_end_sector -lt $partend ]] && unset root_end_sector
 				;;
 			*s)
 				# sector value, we use it directly
-				local lastsector=$(echo $RESIZE_VALUE | tr -c -d '[:digit:]')
-				[[ $lastsector -lt $partend ]] && unset lastsector
+				local root_end_sector=$(echo $RESIZE_VALUE | tr -c -d '[:digit:]')
+				[[ $root_end_sector -lt $partend ]] && unset root_end_sector
 				;;
 		esac
 		# if SD card is larger than 2GB then create another partition behind first one(s)
 		if [[ $capacity -ge 2 ]]; then
-			local secondpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 99 / 3200))}") -1 ))
-			if [[ $secondpartition -lt $partend ]]; then
+			local secondpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 80 / 3200))}") -1 ))
+			if [[ $secondpartition -lt $root_end_sector ]]; then
 				unset secondpartition
+			fi
+			local second_end_sector=$(( $secondpartition + 1 ))
+			local thirdpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 99 / 3200))}") -1 ))
+			if [[ $thirdpartition -lt $second_end_sector ]]; then
+				unset thirdpartition
 			fi
 		fi
 	else
@@ -74,25 +79,25 @@ do_expand_partition()
 		# to use Armbian on a card of inappropriate size so he gets what he deserves (at least he
 		# should know what he's doing)
 		if [[ $capacity -lt 5 ]]; then # 4 GiB or less
-			local lastsector=$(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{print \$2 - (200 * 1024 * ( 1024 / \$4 ))}")
-			if [[ $lastsector -lt $partend ]]; then
-				unset lastsector
+			local root_end_sector=$(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{print \$2 - (200 * 1024 * ( 1024 / \$4 ))}")
+			if [[ $root_end_sector -lt $partend ]]; then
+				unset root_end_sector
 			else
 				ResizeLog="4GB media so leaving 200MB spare area"
 			fi
 		elif [[ $capacity -lt 9 ]]; then # 8 GiB or less
 			# Leave 2 percent unpartitioned
-			local lastsector=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 98 / 3200))}") -1 ))
-			if [[ $lastsector -lt $partend ]]; then
-				unset lastsector
+			local root_end_sector=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 98 / 3200))}") -1 ))
+			if [[ $root_end_sector -lt $partend ]]; then
+				unset root_end_sector
 			else
 				ResizeLog="8GB media so leaving 2 percent spare area"
 			fi
 		else
 			# Leave 1 percent unpartitioned
-			local lastsector=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 99 / 3200))}") -1 ))
-			if [[ $lastsector -lt $partend ]]; then
-				unset lastsector
+			local root_end_sector=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 99 / 3200))}") -1 ))
+			if [[ $root_end_sector -lt $partend ]]; then
+				unset root_end_sector
 			else
 				ResizeLog="Leaving 1 percent spare area"
 			fi
@@ -108,12 +113,17 @@ do_expand_partition()
 		# if dealing with fdisk from util-linux 2.27+ we need a workaround for just 1 partition
 		# though it does not break anything - just prevents an "unexpected command" to fdisk
 		# https://github.com/igorpecovnik/lib/issues/353#issuecomment-224728506
-		((echo d; echo n; echo p; echo ; echo $startfrom; echo $lastsector ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
+		((echo d; echo n; echo p; echo ; echo $startfrom; echo $root_end_sector ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
 	else
-		((echo d; echo $partitions; echo n; echo p; echo ; echo $startfrom; echo $lastsector ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
+		((echo d; echo $partitions; echo n; echo p; echo ; echo $startfrom; echo $root_end_sector ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
 	fi
+	# second partition
 	[[ -n $secondpartition ]] && \
-		((echo n; echo p; echo ; echo $(( $lastsector + 1 )); echo $secondpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
+		((echo n; echo p; echo ; echo $(( $root_end_sector + 1 )); echo $secondpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
+	# third partition
+	[[ -n $thirdpartition ]] && \
+		((echo n; echo p; echo ; echo $(( $second_end_sector + 1 )); echo $thirdpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
+	# DO resize
 	local s=0
 	partprobe $rootdevicepath >>${Log} 2>&1 || s=$?
 	echo -e "New partition table:\n" >>${Log}
@@ -159,6 +169,28 @@ do_expand_btrfs()
 	btrfs filesystem resize max / >> ${Log} 2>&1
 }
 
+do_init_extfs()
+{
+	echo -e "\n### [init_extfs] partition $1, dir $2 now\n" >> ${Log}
+	local partX=$1
+	local FS_DIR=$2
+	[[ -b ${partX} ]] && {
+		echo "Found part: ${partX}." >>${Log}
+
+		yes | mkfs.ext4 ${partX}
+		local PART_UUID=$(tune2fs -l ${partX} 2>/dev/null | grep UUID | awk '{print $3}')
+		grep ${PART_UUID} /etc/fstab 2>/dev/null || {
+			if grep "${FS_DIR}" /etc/fstab 2>/dev/null; then
+				sed "s~UUID=.* ${FS_DIR} ~UUID=${PART_UUID} ${FS_DIR} ~g" /etc/fstab > /tmp/fstab 2>/dev/null && {
+					cp /tmp/fstab /etc/fstab && sync
+				}
+			else
+				echo "UUID=${PART_UUID} ${FS_DIR} ext4 defaults,noatime,nodiratime,commit=600,errors=remount-ro 0 1" >> /etc/fstab
+			fi
+		}
+	}
+}
+
 case "$1" in
 	start)
 		# skip resizing if rootfs is neither ext4 not btrfs or if explicitly disabled
@@ -194,22 +226,10 @@ case "$1" in
 
 			# TODO: init the /opt, /qpt utils ...
 			secondpart=$(echo ${rootpart} | cut -c1-13)$(expr $(echo ${rootpart} | cut -c14) + 1)
-			[[ -b ${secondpart} ]] && {
-				echo "found secondpart: ${secondpart}." >>${Log}
+			do_init_extfs ${secondpart} /opt
 
-				yes | mkfs.ext4 $secondpart
-				SECPRT_UUID=$(tune2fs -l /dev/mmcblk0p2 2>/dev/null | grep UUID | awk '{print $3}')
-
-				grep ${SECPRT_UUID} /etc/fstab 2>/dev/null || {
-					if grep "/opt" /etc/fstab 2>/dev/null; then
-						sed "s~UUID=.* /opt ~UUID=${SECPRT_UUID} /opt ~g" /etc/fstab > /tmp/fstab 2>/dev/null && {
-							cp /tmp/fstab /etc/fstab && sync
-						}
-					else
-						echo "UUID=${SECPRT_UUID} /opt ext4 defaults,noatime,nodiratime,commit=600,errors=remount-ro 0 1" >> /etc/fstab
-					fi
-				}
-			}
+			thirdpart=$(echo ${rootpart} | cut -c1-13)$(expr $(echo ${rootpart} | cut -c14) + 2)
+			do_init_extfs ${thirdpart} /opt/log.hdd
 
 			systemctl disable armbian-resize-filesystem
 		}
