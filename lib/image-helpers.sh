@@ -123,7 +123,7 @@ customize_image()
 	QPT_PATH=$SRC/userpatches/qpt-awesome
 	cd $QPT_PATH && {
 		#cp -a $QPT_PATH/* $SDCARD/opt/
-		tar czvf $SDCARD/opt/zenputer.tar.gz *
+		tar czvf $SDCARD/opt/zenputer.tar.gz * .git
 	}
 } #############################################################################
 

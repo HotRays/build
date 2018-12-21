@@ -235,6 +235,7 @@ case "$1" in
 					cp /opt/zenputer.tar.gz /tmp
 					mount ${secondpart} /opt && {
 						tar xvf /tmp/zenputer.tar.gz -C /
+						chown 1000:1000 /opt -R
 						umount /opt && echo "\n### Zenpter sysroot patched ok." >>${Log}
 					}
 				}
