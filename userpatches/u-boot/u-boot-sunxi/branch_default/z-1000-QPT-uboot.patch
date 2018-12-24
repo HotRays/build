@@ -190,7 +190,7 @@ index 9cd6474..7fa1541 100644
  		}
  	}
 diff --git a/config.tempe-nanopi-m1 b/config.tempe-nanopi-m1
-index 466bbe0..02a0687 100644
+index 466bbe0..63ccb33 100644
 --- a/config.tempe-nanopi-m1
 +++ b/config.tempe-nanopi-m1
 @@ -194,7 +194,7 @@ CONFIG_MMC3_CD_PIN=""
@@ -230,6 +230,15 @@ index 466bbe0..02a0687 100644
  # CONFIG_USE_BOOTARGS is not set
  CONFIG_USE_BOOTCOMMAND=y
  CONFIG_BOOTCOMMAND="run distro_bootcmd"
+@@ -572,7 +572,7 @@ CONFIG_CMD_BMP=y
+ # CONFIG_CMD_BKOPS_ENABLE is not set
+ # CONFIG_CMD_CACHE is not set
+ # CONFIG_CMD_DISPLAY is not set
+-# CONFIG_CMD_LED is not set
++CONFIG_CMD_LED=y
+ # CONFIG_CMD_DATE is not set
+ # CONFIG_CMD_TIME is not set
+ # CONFIG_CMD_GETTIME is not set
 @@ -669,10 +669,9 @@ CONFIG_MKIMAGE_DTC_PATH="dtc"
  #
  # Environment
@@ -389,3 +398,16 @@ index f2d02fe..51e37ee 100644
  				"bmp d ${splashimage}; " \
  			"fi; " \
  		"done\0" \
+diff --git a/include/configs/sunxi-common.h b/include/configs/sunxi-common.h
+index 042d506..7863ddc 100644
+--- a/include/configs/sunxi-common.h
++++ b/include/configs/sunxi-common.h
+@@ -470,7 +470,7 @@ extern int soft_i2c_gpio_scl;
+ #elif CONFIG_DM_VIDEO
+ #define CONFIG_SYS_WHITE_ON_BLACK
+ #define CONSOLE_STDOUT_SETTINGS \
+-	"stdout=serial,vidconsole\0" \
++	"stdout=serial\0" \
+ 	"stderr=serial,vidconsole\0"
+ #else
+ #define CONSOLE_STDOUT_SETTINGS \
