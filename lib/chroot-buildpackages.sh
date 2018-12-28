@@ -54,7 +54,10 @@ create_chroot()
 	APT::Install-Recommends "0";
 	APT::Install-Suggests "0";
 	EOF
-	[[ -f $target_dir/etc/locale.gen ]] && sed -i "s/^# en_US.UTF-8/en_US.UTF-8/" $target_dir/etc/locale.gen
+	[[ -f $target_dir/etc/locale.gen ]] && {
+		sed -i "s/^# en_US.UTF-8/en_US.UTF-8/" $target_dir/etc/locale.gen
+		sed -i "s/^# zh_CN.UTF-8/zh_CN.UTF-8/" $target_dir/etc/locale.gen
+	}
 	chroot $target_dir /bin/bash -c "locale-gen; update-locale LANG=en_US:en LC_ALL=en_US.UTF-8"
 	printf '#!/bin/sh\nexit 101' > $target_dir/usr/sbin/policy-rc.d
 	chmod 755 $target_dir/usr/sbin/policy-rc.d
