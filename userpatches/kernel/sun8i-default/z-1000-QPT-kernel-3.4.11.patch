@@ -9138,9 +9138,20 @@ index 000000000000..0122b6f733d9
 +pnmnoraw ${RAW_PNM}.tmp > ${OUT_PPM} 
 +
 diff --git a/drivers/video/sunxi/disp2/disp/de/disp_display.c b/drivers/video/sunxi/disp2/disp/de/disp_display.c
-index 37084b7cb3a6..093cfb78e92c 100755
+index 37084b7cb3a6..0cd13e0e526c 100755
 --- a/drivers/video/sunxi/disp2/disp/de/disp_display.c
 +++ b/drivers/video/sunxi/disp2/disp/de/disp_display.c
+@@ -763,8 +763,8 @@ s32 bsp_disp_get_screen_width_from_output_type(u32 disp, u32 output_type, u32 ou
+ 			width = 1280;
+ 			height = 1024;
+ 			break;
+-		case DISP_TV_MOD_1360_768P:
+-			width = 1360;
++		case DISP_TV_MOD_1366_768P:
++			width = 1366;
+ 			height = 768;
+ 			break;
+ 		case DISP_TV_MOD_1440_900P:
 @@ -779,6 +779,10 @@ s32 bsp_disp_get_screen_width_from_output_type(u32 disp, u32 output_type, u32 ou
  			width = 2048;
  			height = 1536;
@@ -9152,6 +9163,17 @@ index 37084b7cb3a6..093cfb78e92c 100755
  		}
  	}
  	/* FIXME: add other output device res */
+@@ -843,8 +847,8 @@ s32 bsp_disp_get_screen_height_from_output_type(u32 disp, u32 output_type, u32 o
+ 			width = 1280;
+ 			height = 1024;
+ 			break;
+-		case DISP_TV_MOD_1360_768P:
+-			width = 1360;
++		case DISP_TV_MOD_1366_768P:
++			width = 1366;
+ 			height = 768;
+ 			break;
+ 		case DISP_TV_MOD_1440_900P:
 @@ -859,6 +863,10 @@ s32 bsp_disp_get_screen_height_from_output_type(u32 disp, u32 output_type, u32 o
  			width = 2048;
  			height = 1536;
@@ -9189,10 +9211,15 @@ index 230220eb07be..eb6397a5f7f3 100755
  
  static unsigned char ca_table[64]=
 diff --git a/drivers/video/sunxi/disp2/hdmi/aw/hdmi_core.c b/drivers/video/sunxi/disp2/hdmi/aw/hdmi_core.c
-index 306e810413d8..cee223b2431f 100755
+index 306e810413d8..e08a8f54ecec 100755
 --- a/drivers/video/sunxi/disp2/hdmi/aw/hdmi_core.c
 +++ b/drivers/video/sunxi/disp2/hdmi/aw/hdmi_core.c
-@@ -51,6 +51,7 @@ disp_video_timings video_timing[] =
+@@ -47,10 +47,11 @@ disp_video_timings video_timing[] =
+ 	{HDMI800_480P,       0,27000000,  0,   800,   480,  1028,   88,   80,  60,   525,  29, 13,  3,  0,   0,   0,    0,  0},
+ 	{HDMI1024_768P,      0,65000000,  0,  1024,   768,  1344,  160,	  24, 136,   806,  29,  3,  6,  0,   0,   0,    0,  0},
+ 	{HDMI1280_1024P,     0,108000000, 0,  1280,  1024,  1688,  248,   48, 112,  1066,  38,  1,  3,  1,   1,   0,    0,  0},
+-	{HDMI1360_768P,      0,85500000,  0,  1360,   768,  1792,  256,   64, 112,   805,  17,  3, 17,  0,   0,   0,    0,  0},
++	{HDMI1366_768P,      0,85500000,  0,  1366,   768,  1792,  256,   64, 112,   805,  17,  3, 17,  0,   0,   0,    0,  0},
  	{HDMI1440_900P,      0,108000000, 0,  1440,   900,  1848,  248,   48, 112,   942,  38,  1,  3,  1,   1,   0,    0,  0},
  	{HDMI1680_1050P,     0,147000000, 0,  1680,  1050,  2256,  288,  104, 184,  1087,  33,  1,  3,  1,   1,   0,    0,  0},
  	{HDMI2048_1536P,     0,172040000, 0,  2048,  1536,  2736,  344,  128, 216,  1572,  32,  1,  3,  1,   1,   0,    0  ,0},
@@ -9201,9 +9228,20 @@ index 306e810413d8..cee223b2431f 100755
  };
  
 diff --git a/drivers/video/sunxi/disp2/hdmi/aw/hdmi_edid.c b/drivers/video/sunxi/disp2/hdmi/aw/hdmi_edid.c
-index 87e1fe98ede7..1ba25693a8f8 100755
+index 87e1fe98ede7..6852e73957bd 100755
 --- a/drivers/video/sunxi/disp2/hdmi/aw/hdmi_edid.c
 +++ b/drivers/video/sunxi/disp2/hdmi/aw/hdmi_edid.c
+@@ -172,8 +172,8 @@ static __s32 Parse_DTD_Block(__u8 *pbuf)
+ 		if ((sizex== 1280) && (sizey == 1024)) {
+ 			Device_Support_VIC[HDMI1280_1024P] = 1;
+ 		}
+-		if ((sizex== 1360) && (sizey == 768)) {
+-			Device_Support_VIC[HDMI1360_768P] = 1;
++		if ((sizex== 1366) && (sizey == 768)) {
++			Device_Support_VIC[HDMI1366_768P] = 1;
+ 		}
+ 		if ((sizex== 1440) && (sizey == 900)) {
+ 			Device_Support_VIC[HDMI1440_900P] = 1;
 @@ -181,6 +181,9 @@ static __s32 Parse_DTD_Block(__u8 *pbuf)
  		if ((sizex== 1680) && (sizey == 1050)) {
  			Device_Support_VIC[HDMI1680_1050P] = 1;
@@ -9214,6 +9252,17 @@ index 87e1fe98ede7..1ba25693a8f8 100755
  		if ((sizex== 2048) && (sizey == 1536)) {
  			Device_Support_VIC[HDMI2048_1536P] = 1;
  		}
+@@ -210,8 +213,8 @@ static __s32 Parse_DTD_Block(__u8 *pbuf)
+ 		if ((sizex== 1280) && (sizey == 1024)) {
+ 			Device_Support_VIC[HDMI1280_1024P] = 1;
+ 		}
+-		if ((sizex== 1360) && (sizey == 768)) {
+-			Device_Support_VIC[HDMI1360_768P] = 1;
++		if ((sizex== 1366) && (sizey == 768)) {
++			Device_Support_VIC[HDMI1366_768P] = 1;
+ 		}
+ 		if ((sizex== 1440) && (sizey == 900)) {
+ 			Device_Support_VIC[HDMI1440_900P] = 1;
 @@ -219,6 +222,9 @@ static __s32 Parse_DTD_Block(__u8 *pbuf)
  		if ((sizex== 1680) && (sizey == 1050)) {
  			Device_Support_VIC[HDMI1680_1050P] = 1;
@@ -9245,10 +9294,15 @@ index 87e1fe98ede7..1ba25693a8f8 100755
  
  }
 diff --git a/drivers/video/sunxi/disp2/hdmi/drv_hdmi.c b/drivers/video/sunxi/disp2/hdmi/drv_hdmi.c
-index e462c86114a4..75d95554ab86 100755
+index e462c86114a4..927ea3171b01 100755
 --- a/drivers/video/sunxi/disp2/hdmi/drv_hdmi.c
 +++ b/drivers/video/sunxi/disp2/hdmi/drv_hdmi.c
-@@ -291,6 +291,7 @@ static struct disp_hdmi_mode hdmi_mode_tbl[] = {
+@@ -287,10 +287,11 @@ static struct disp_hdmi_mode hdmi_mode_tbl[] = {
+ 	{DISP_TV_MOD_800_480P,            HDMI800_480P,      },
+ 	{DISP_TV_MOD_1024_768P,           HDMI1024_768P,     },
+ 	{DISP_TV_MOD_1280_1024P,          HDMI1280_1024P,    },
+-	{DISP_TV_MOD_1360_768P,           HDMI1360_768P,     },
++	{DISP_TV_MOD_1366_768P,           HDMI1366_768P,     },
  	{DISP_TV_MOD_1440_900P,           HDMI1440_900P,     },
  	{DISP_TV_MOD_1680_1050P,          HDMI1680_1050P,    },
  	{DISP_TV_MOD_2048_1536P,          HDMI2048_1536P,    },
@@ -9257,10 +9311,15 @@ index e462c86114a4..75d95554ab86 100755
  
  __u32 Hdmi_get_vic(u32 mode)
 diff --git a/drivers/video/sunxi/disp2/hdmi/hdmi_hal.h b/drivers/video/sunxi/disp2/hdmi/hdmi_hal.h
-index 044bbe8efa89..883fba170d11 100755
+index 044bbe8efa89..f4b6aeca723f 100755
 --- a/drivers/video/sunxi/disp2/hdmi/hdmi_hal.h
 +++ b/drivers/video/sunxi/disp2/hdmi/hdmi_hal.h
-@@ -23,6 +23,7 @@
+@@ -19,10 +19,11 @@
+ #define HDMI800_480P            35
+ #define HDMI1024_768P           36
+ #define HDMI1280_1024P          37
+-#define HDMI1360_768P           38
++#define HDMI1366_768P           38
  #define HDMI1440_900P           39
  #define HDMI1680_1050P          40
  #define HDMI2048_1536P          41
@@ -9671,11 +9730,99 @@ index 000000000000..320a44fb3cb9
 +		    int *panel_bits_per_colourp);
 +
 +#endif /* __EDID_H_ */
+diff --git a/include/video/drv_display_legacy.h b/include/video/drv_display_legacy.h
+index 6e1eacb9ba62..5c9997e20107 100755
+--- a/include/video/drv_display_legacy.h
++++ b/include/video/drv_display_legacy.h
+@@ -52,17 +52,17 @@ typedef enum
+ 
+ typedef enum
+ {
+-    DISP_MOD_INTERLEAVED        =0x1,   //interleaved,1¸öµØÖ·
+-    DISP_MOD_NON_MB_PLANAR      =0x0,   //ÎÞºê¿éÆ½ÃæÄ£Ê½,3¸öµØÖ·,RGB/YUVÃ¿¸öchannel·Ö±ð´æ·Å
+-    DISP_MOD_NON_MB_UV_COMBINED =0x2,   //ÎÞºê¿éUV´ò°üÄ£Ê½,2¸öµØÖ·,YºÍUV·Ö±ð´æ·Å
+-    DISP_MOD_MB_PLANAR          =0x4,   //ºê¿éÆ½ÃæÄ£Ê½,3¸öµØÖ·,RGB/YUVÃ¿¸öchannel·Ö±ð´æ·Å
+-    DISP_MOD_MB_UV_COMBINED     =0x6,   //ºê¿éUV´ò°üÄ£Ê½ ,2¸öµØÖ·,YºÍUV·Ö±ð´æ·Å
++    DISP_MOD_INTERLEAVED        =0x1,   //interleaved,1ï¿½ï¿½ï¿½ï¿½Ö·
++    DISP_MOD_NON_MB_PLANAR      =0x0,   //ï¿½Þºï¿½ï¿½Æ½ï¿½ï¿½Ä£Ê½,3ï¿½ï¿½ï¿½ï¿½Ö·,RGB/YUVÃ¿ï¿½ï¿½channelï¿½Ö±ï¿½ï¿½ï¿½
++    DISP_MOD_NON_MB_UV_COMBINED =0x2,   //ï¿½Þºï¿½ï¿½UVï¿½ï¿½ï¿½Ä£Ê½,2ï¿½ï¿½ï¿½ï¿½Ö·,Yï¿½ï¿½UVï¿½Ö±ï¿½ï¿½ï¿½
++    DISP_MOD_MB_PLANAR          =0x4,   //ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Ä£Ê½,3ï¿½ï¿½ï¿½ï¿½Ö·,RGB/YUVÃ¿ï¿½ï¿½channelï¿½Ö±ï¿½ï¿½ï¿½
++    DISP_MOD_MB_UV_COMBINED     =0x6,   //ï¿½ï¿½ï¿½UVï¿½ï¿½ï¿½Ä£Ê½ ,2ï¿½ï¿½ï¿½ï¿½Ö·,Yï¿½ï¿½UVï¿½Ö±ï¿½ï¿½ï¿½
+ }__disp_pixel_mod_t;
+ 
+ typedef enum
+ {
+ //for interleave argb8888
+-    DISP_SEQ_ARGB   =0x0,//AÔÚ¸ßÎ»
++    DISP_SEQ_ARGB   =0x0,//Aï¿½Ú¸ï¿½Î»
+     DISP_SEQ_BGRA   =0x2,
+     
+ //for nterleaved yuv422
+@@ -80,12 +80,12 @@ typedef enum
+     DISP_SEQ_VUVU   =0xa,
+     
+ //for 16bpp rgb
+-    DISP_SEQ_P10    = 0xd,//p1ÔÚ¸ßÎ»
+-    DISP_SEQ_P01    = 0xe,//p0ÔÚ¸ßÎ»
++    DISP_SEQ_P10    = 0xd,//p1ï¿½Ú¸ï¿½Î»
++    DISP_SEQ_P01    = 0xe,//p0ï¿½Ú¸ï¿½Î»
+     
+ //for planar format or 8bpp rgb
+-    DISP_SEQ_P3210  = 0xf,//p3ÔÚ¸ßÎ»
+-    DISP_SEQ_P0123  = 0x10,//p0ÔÚ¸ßÎ»
++    DISP_SEQ_P3210  = 0xf,//p3ï¿½Ú¸ï¿½Î»
++    DISP_SEQ_P0123  = 0x10,//p0ï¿½Ú¸ï¿½Î»
+     
+ //for 4bpp rgb
+     DISP_SEQ_P76543210  = 0x11,
+@@ -207,7 +207,7 @@ typedef enum
+ {
+     DISP_VGA_H1680_V1050    = 0,
+     DISP_VGA_H1440_V900     = 1,
+-    DISP_VGA_H1360_V768     = 2,
++    DISP_VGA_H1366_V768     = 2,
+     DISP_VGA_H1280_V1024    = 3,
+     DISP_VGA_H1024_V768     = 4,
+     DISP_VGA_H800_V600      = 5,
+@@ -452,8 +452,8 @@ typedef enum
+ 
+ typedef struct
+ {
+-    __u32                   addr[3];    // frame bufferµÄÄÚÈÝµØÖ·£¬¶ÔÓÚrgbÀàÐÍ£¬Ö»ÓÐaddr[0]ÓÐÐ§
+-    __disp_rectsz_t         size;//µ¥Î»ÊÇpixel
++    __u32                   addr[3];    // frame bufferï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rgbï¿½ï¿½ï¿½Í£ï¿½Ö»ï¿½ï¿½addr[0]ï¿½ï¿½Ð§
++    __disp_rectsz_t         size;//ï¿½ï¿½Î»ï¿½ï¿½pixel
+     __disp_pixel_fmt_t      format;
+     __disp_pixel_seq_t      seq;
+     __disp_pixel_mod_t      mode;
+@@ -470,7 +470,7 @@ typedef struct
+     __disp_layer_work_mode_t    mode;       //layer work mode
+     __bool                      b_from_screen;
+     __u8                        pipe;       //layer pipe,0/1,if in scaler mode, scaler0 must be pipe0, scaler1 must be pipe1
+-    __u8                        prio;       //layer priority,can get layer prio,but never set layer prio,´Óµ×ÖÁ¶¥,ÓÅÏÈ¼¶ÓÉµÍÖÁ¸ß
++    __u8                        prio;       //layer priority,can get layer prio,but never set layer prio,ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½È¼ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½ï¿½
+     __bool                      alpha_en;   //layer global alpha enable
+     __u16                       alpha_val;  //layer global alpha value 
+     __bool                      ck_enable;  //layer color key enable
+@@ -497,7 +497,7 @@ typedef struct
+     __u32   addr_right[3];//used when in frame packing 3d mode
+     __bool  interlace;
+     __bool  top_field_first;
+-    __u32   frame_rate; // *FRAME_RATE_BASE(ÏÖÔÚ¶¨Îª1000)
++    __u32   frame_rate; // *FRAME_RATE_BASE(ï¿½ï¿½ï¿½Ú¶ï¿½Îª1000)
+     __u32   flag_addr;//dit maf flag address
+     __u32   flag_stride;//dit maf flag line stride
+     __bool  maf_valid;
 diff --git a/include/video/sunxi_display2.h b/include/video/sunxi_display2.h
-index 6422c76d0b86..809ff887e4a9 100755
+index 6422c76d0b86..2e3165fafdde 100755
 --- a/include/video/sunxi_display2.h
 +++ b/include/video/sunxi_display2.h
-@@ -137,7 +137,8 @@ typedef enum
+@@ -133,11 +133,12 @@ typedef enum
+ 	DISP_TV_MOD_800_480P            = 0x1f,
+ 	DISP_TV_MOD_1024_768P           = 0x20,
+ 	DISP_TV_MOD_1280_1024P          = 0x21,
+-	DISP_TV_MOD_1360_768P           = 0x22,
++	DISP_TV_MOD_1366_768P           = 0x22,
  	DISP_TV_MOD_1440_900P           = 0x23,
  	DISP_TV_MOD_1680_1050P          = 0x24,
  	DISP_TV_MOD_2048_1536P          = 0x25,
