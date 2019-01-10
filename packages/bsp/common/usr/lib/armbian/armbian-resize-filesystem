@@ -236,6 +236,7 @@ case "$1" in
 					mount ${secondpart} /opt && {
 						tar xvf /tmp/zenputer.tar.gz -C /
 						chown ken:ken /opt -R
+						ldconfig && echo "\n### Zenpter add ld-path and sync." >>${Log}
 						umount /opt && echo "\n### Zenpter sysroot patched ok." >>${Log}
 					}
 				}
