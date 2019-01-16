@@ -62,14 +62,19 @@ do_expand_partition()
 		esac
 		# if SD card is larger than 2GB then create another partition behind first one(s)
 		if [[ $capacity -ge 2 ]]; then
-			local secondpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 80 / 3200))}") -1 ))
+			local secondpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 60 / 3200))}") -1 ))
 			if [[ $secondpartition -lt $root_end_sector ]]; then
 				unset secondpartition
 			fi
 			local second_end_sector=$(( $secondpartition + 1 ))
-			local thirdpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 99 / 3200))}") -1 ))
+			local thirdpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 80 / 3200))}") -1 ))
 			if [[ $thirdpartition -lt $second_end_sector ]]; then
 				unset thirdpartition
+			fi
+			local third_end_sector=$(( $thirdpartition + 1 ))
+			local forthpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 99 / 3200))}") -1 ))
+			if [[ $forthpartition -lt $third_end_sector ]]; then
+				unset forthpartition
 			fi
 		fi
 	else
@@ -117,24 +122,29 @@ do_expand_partition()
 	else
 		((echo d; echo $partitions; echo n; echo p; echo ; echo $startfrom; echo $root_end_sector ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
 	fi
+
 	# second partition
 	[[ -n $secondpartition ]] && \
 		((echo n; echo p; echo ; echo $(( $root_end_sector + 1 )); echo $secondpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
 	# third partition
 	[[ -n $thirdpartition ]] && \
 		((echo n; echo p; echo ; echo $(( $second_end_sector + 1 )); echo $thirdpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
-	# DO resize
+	# forth partition
+	[[ -n $forthpartition ]] && \
+		((echo n; echo p; echo ; echo $(( $third_end_sector + 1 )); echo $forthpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
+	# DONE resize
+
 	local s=0
 	partprobe $rootdevicepath >>${Log} 2>&1 || s=$?
 	echo -e "New partition table:\n" >>${Log}
 	cat /proc/partitions >>${Log}
 	echo -e "\nNow trying to resize $1 filesystem on $rootsource to the limits:\n" >>${Log}
-	
+
 	# if crypt-device, resize LUKS container first
 	if [[ $IS_CRYPTDEVICE ]]; then
 		do_resize_crypt $cryptname
 	fi
-	
+
 	case $1 in
 		ext4)
 			resize2fs $rootsource >>${Log} 2>&1
