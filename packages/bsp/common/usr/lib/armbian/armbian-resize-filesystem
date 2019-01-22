@@ -67,7 +67,7 @@ do_expand_partition()
 				unset secondpartition
 			fi
 			local second_end_sector=$(( $secondpartition + 1 ))
-			local thirdpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 80 / 3200))}") -1 ))
+			local thirdpartition=$(( 32 * $(parted $rootdevicepath unit s print -sm | grep "^$rootdevicepath" | awk -F":" "{printf (\"%0d\", ( \$2 * 65 / 3200))}") -1 ))
 			if [[ $thirdpartition -lt $second_end_sector ]]; then
 				unset thirdpartition
 			fi
@@ -130,8 +130,9 @@ do_expand_partition()
 	[[ -n $thirdpartition ]] && \
 		((echo n; echo p; echo ; echo $(( $second_end_sector + 1 )); echo $thirdpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
 	# forth partition
+	# !!! last primary part no part num option.
 	[[ -n $forthpartition ]] && \
-		((echo n; echo p; echo ; echo $(( $third_end_sector + 1 )); echo $forthpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
+		((echo n; echo p; echo $(( $third_end_sector + 1 )); echo $forthpartition ; echo w;) | fdisk $rootdevicepath) >>${Log} 2>&1
 	# DONE resize
 
 	local s=0
@@ -150,7 +151,7 @@ do_expand_partition()
 			resize2fs $rootsource >>${Log} 2>&1
 			# check whether reboot is necessary for resize2fs to take effect
 			local freesize=$(( $(findmnt --target / -n -o AVAIL -b) / 1048576 )) # MiB
-			if [[ $s != 0 || $freesize -lt 512 ]]; then
+			if [[ $s != 0 || $freesize -lt 256 ]]; then
 				touch /var/run/resize2fs-reboot
 				echo -e "\n### [resize2fs] Automated reboot needed to finish the resize procedure" >>${Log}
 			fi
