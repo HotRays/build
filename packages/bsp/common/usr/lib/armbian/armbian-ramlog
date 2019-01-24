@@ -93,7 +93,8 @@ lazy_start_fixup() {
 
 lazy_stop_fixup() {
 	# fixup stop logic, /opt MUST unmount
-	# umount -l /opt # auto unmount by system scripts ?
+	# auto unmount by system scripts ?
+	umount -l /opt
 }
 
 case "$1" in

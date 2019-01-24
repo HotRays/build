@@ -1,5 +1,5 @@
 # H3 quad core 1Gb SoC
-BOARD_NAME="qpt-vdih3v1"
+BOARD_NAME="QPT-VDIH3"
 BOARDFAMILY="sun8i"
 BOOTCONFIG="qpt-vdih3v1_defconfig"
 #
