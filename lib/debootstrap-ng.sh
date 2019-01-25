@@ -154,8 +154,14 @@ create_rootfs_cache()
 		# stage: configure language and locales
 		display_alert "Configuring locales" "$DEST_LANG" "info"
 
-		[[ -f $SDCARD/etc/locale.gen ]] && sed -i "s/^# $DEST_LANG/$DEST_LANG/" $SDCARD/etc/locale.gen
-		eval 'LC_ALL=C LANG=C chroot $SDCARD /bin/bash -c "locale-gen $DEST_LANG"' ${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'}
+		[[ -f $SDCARD/etc/locale.gen ]] && {
+			sed -i "s/^# $DEST_LANG/$DEST_LANG/" $SDCARD/etc/locale.gen
+			sed -i "s/^# zh_CN.UTF-8/zh_CN.UTF-8/" $SDCARD/etc/locale.gen
+			sed -i "s/^# zh_CN.GBK/zh_CN.GBK/" $SDCARD/etc/locale.gen
+			sed -i "s/^# zh_TW.UTF-8/zh_TW.UTF-8/" $SDCARD/etc/locale.gen
+			sed -i "s/^# zh_TW BIG5/zh_TW BIG5/" $SDCARD/etc/locale.gen
+		}
+		eval 'LC_ALL=C LANG=C chroot $SDCARD /bin/bash -c "locale-gen"' ${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'}
 		eval 'LC_ALL=C LANG=C chroot $SDCARD /bin/bash -c "update-locale LANG=$DEST_LANG LANGUAGE=$DEST_LANG LC_MESSAGES=$DEST_LANG"' \
 			${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'}
 
